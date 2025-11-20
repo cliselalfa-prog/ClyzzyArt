@@ -1,0 +1,4467 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Kelas Kimia - Sistem Lengkap</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .login-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .login-header {
+            background: var(--primary);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .login-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            opacity: 0.9;
+        }
+        
+        .login-body {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .role-selector {
+            display: flex;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 2px solid #e1e5e9;
+        }
+        
+        .role-option {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .role-option.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+        }
+        
+        .login-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .demo-accounts {
+            margin-top: 25px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .demo-accounts h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .demo-account {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 8px;
+            background-color: white;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .demo-account:last-child {
+            margin-bottom: 0;
+        }
+        
+        .demo-btn {
+            background: none;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .demo-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert-error {
+            background-color: #ffeaea;
+            color: #d63031;
+            border-left: 4px solid #d63031;
+        }
+        
+        .alert-success {
+            background-color: #e8f8ef;
+            color: #27ae60;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #f39c12;
+        }
+        
+        /* Dashboard Styles */
+        .dashboard {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: var(--secondary);
+            color: white;
+            transition: all 0.3s;
+            box-shadow: 3px 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            background: var(--primary);
+            text-align: center;
+        }
+        
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-menu {
+            padding: 15px 0;
+        }
+        
+        .sidebar-menu ul {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            padding: 12px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .sidebar-menu li:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-menu li.active {
+            background: rgba(255,255,255,0.1);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .sidebar-menu a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-menu i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f5f7fa;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .header h1 {
+            color: var(--secondary);
+            font-size: 1.8rem;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .logout-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+        
+        /* Dashboard Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .bg-primary { background: var(--primary); }
+        .bg-success { background: var(--success); }
+        .bg-warning { background: var(--warning); }
+        .bg-danger { background: var(--danger); }
+        
+        .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .card p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Content Section */
+        .content-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .section-header h2 {
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #27ae60;
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #e67e22;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .badge-primary {
+            background: #cce7ff;
+            color: #004085;
+        }
+        
+        .badge-secondary {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 600px;
+            max-width: 90%;
+            border-radius: 8px;
+            overflow: hidden;
+            animation: modalFadeIn 0.3s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+        }
+        
+        .close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-footer {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 4px;
+            color: white;
+            font-weight: 600;
+            z-index: 1100;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: var(--success);
+        }
+        
+        .notification.error {
+            background: var(--danger);
+        }
+        
+        .notification.warning {
+            background: var(--warning);
+        }
+        
+        /* Progress Bar */
+        .progress {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 5px;
+            transition: width 0.3s;
+        }
+        
+        /* Search Box */
+        .search-box {
+            margin-bottom: 20px;
+        }
+        
+        .search-box .form-control {
+            max-width: 300px;
+        }
+        
+        /* Chart Container */
+        .chart-container {
+            height: 300px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        /* Attendance Status */
+        .attendance-status {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .status-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .status-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        /* Tugas Stats */
+        .tugas-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Pengumpulan Tugas */
+        .pengumpulan-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: #fafafa;
+        }
+        
+        .pengumpulan-info {
+            flex: 1;
+        }
+        
+        .pengumpulan-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .pengumpulan-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .pengumpulan-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Murid Specific Styles */
+        .tugas-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .tugas-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .tugas-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .tugas-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+        
+        .tugas-meta {
+            display: flex;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .tugas-description {
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .tugas-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Tugas/Kuis Card Styles */
+        .tugas-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .tugas-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .tugas-card.kuis {
+            border-left-color: var(--warning);
+        }
+        
+        .tugas-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .tugas-card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+        
+        .tugas-card-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        
+        .tugas-card-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .tugas-card-badge.tugas {
+            background: #cce7ff;
+            color: #004085;
+        }
+        
+        .tugas-card-badge.kuis {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .tugas-card-badge.aktif {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .tugas-card-badge.selesai {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+        
+        .tugas-card-badge.terlambat {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .tugas-card-description {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .tugas-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .tugas-card-progress {
+            flex: 1;
+            margin-right: 15px;
+        }
+        
+        .tugas-card-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .attendance-status {
+                flex-direction: column;
+            }
+            
+            .pengumpulan-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .pengumpulan-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tugas-card-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .tugas-card-footer {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .tugas-card-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>Portal Kelas Kimia</h1>
+                <p>Silakan login untuk melanjutkan</p>
+            </div>
+            <div class="login-body">
+                <div id="alertMessage" class="alert alert-warning">
+                    <strong>Perhatian:</strong> API key tidak valid. Gunakan akun demo untuk login.
+                </div>
+                
+                <div class="role-selector">
+                    <div class="role-option active" data-role="guru">Guru</div>
+                    <div class="role-option" data-role="murid">Murid</div>
+                </div>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" class="form-control" placeholder="Masukkan username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Masukkan password" required>
+                    </div>
+                    <div class="form-group" id="kelasContainer" style="display: none;">
+                        <label for="kelas">Kelas</label>
+                        <select id="kelas" class="form-control">
+                            <option value="">Pilih Kelas</option>
+                            <option value="X IPA 1">X IPA 1</option>
+                            <option value="X IPA 2">X IPA 2</option>
+                            <option value="X IPA 3">X IPA 3</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </form>
+                
+                <div class="demo-accounts">
+                    <h3>Gunakan Akun Demo:</h3>
+                    <div class="demo-account">
+                        <span>Guru: guru / 123</span>
+                        <button class="demo-btn" data-username="guru" data-password="123">Gunakan</button>
+                    </div>
+                    <div class="demo-account">
+                        <span>Murid: murid / 123</span>
+                        <button class="demo-btn" data-username="murid" data-password="123">Gunakan</button>
+                    </div>
+                </div>
+                
+                <div class="login-footer">
+                    <p>Demo Account:<br>
+                    <strong>Guru:</strong> guru / 123<br>
+                    <strong>Murid:</strong> murid / 123 (Kelas: X IPA 1)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dashboard Guru -->
+    <div class="dashboard" id="guruDashboard">
+        <div class="container">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Portal Guru</h2>
+                    <p>Kimia Kelas X</p>
+                </div>
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="active" data-target="dashboard-guru"><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li data-target="siswa"><a href="#"><i class="fas fa-users"></i> Data Siswa</a></li>
+                        <li data-target="tugas-guru"><a href="#"><i class="fas fa-tasks"></i> Tugas & Kuis</a></li>
+                        <li data-target="nilai"><a href="#"><i class="fas fa-chart-bar"></i> Nilai & Laporan</a></li>
+                        <li data-target="absensi"><a href="#"><i class="fas fa-clipboard-list"></i> Absensi</a></li>
+                        <li data-target="jadwal"><a href="#"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
+                        <li data-target="materi-guru"><a href="#"><i class="fas fa-book"></i> Materi</a></li>
+                        <li data-target="pengumuman-guru"><a href="#"><i class="fas fa-bullhorn"></i> Pengumuman</a></li>
+                        <li data-target="analisis"><a href="#"><i class="fas fa-chart-pie"></i> Analisis</a></li>
+                        <li data-target="pengaturan"><a href="#"><i class="fas fa-cog"></i> Pengaturan</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <div class="header">
+                    <h1>Dashboard Guru - Kimia Kelas X</h1>
+                    <div class="user-info">
+                        <img src="https://i.pravatar.cc/150?img=12" alt="Guru" id="guruAvatar">
+                        <div>
+                            <h4 id="guruNama">Bu Sari, M.Pd</h4>
+                            <p>Guru Kimia</p>
+                        </div>
+                        <button class="logout-btn" id="logoutGuru">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Dashboard Guru -->
+                <div id="dashboard-guru" class="content-section active">
+                    <div class="dashboard-cards">
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <h3 id="totalSiswa">32</h3>
+                                    <p>Jumlah Siswa</p>
+                                </div>
+                                <div class="card-icon bg-primary">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <h3 id="tugasAktif">5</h3>
+                                    <p>Tugas Aktif</p>
+                                </div>
+                                <div class="card-icon bg-success">
+                                    <i class="fas fa-tasks"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <h3 id="tugasPerluNilai">12</h3>
+                                    <p>Tugas Perlu Dinilai</p>
+                                </div>
+                                <div class="card-icon bg-warning">
+                                    <i class="fas fa-clipboard-check"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <h3 id="pengingat">3</h3>
+                                    <p>Pengingat</p>
+                                </div>
+                                <div class="card-icon bg-danger">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Grafik Prestasi Siswa -->
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Grafik Prestasi Siswa</h2>
+                            <div>
+                                <select id="chartFilter" class="form-control">
+                                    <option value="rata-rata">Rata-rata Kelas</option>
+                                    <option value="per-kelas">Per Kelas</option>
+                                    <option value="per-mata-pelajaran">Per Mata Pelajaran</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container" id="grafikPrestasi">
+                            <p>Grafik akan ditampilkan di sini</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Tugas Mendatang -->
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Tugas Mendatang</h2>
+                        </div>
+                        <div id="tugasMendatangCards">
+                            <!-- Tugas mendatang akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Data Siswa Section -->
+                <div id="siswa" class="content-section">
+                    <div class="section-header">
+                        <h2>Data Siswa Kelas X IPA</h2>
+                        <div>
+                            <button class="btn btn-primary" id="tambahSiswaBtn">
+                                <i class="fas fa-plus"></i> Tambah Siswa
+                            </button>
+                            <button class="btn btn-success" id="importSiswaBtn">
+                                <i class="fas fa-file-import"></i> Import
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="search-box">
+                        <input type="text" id="cariSiswa" class="form-control" placeholder="Cari siswa...">
+                    </div>
+                    
+                    <table id="tabelSiswa">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Siswa</th>
+                                <th>NIS</th>
+                                <th>Email</th>
+                                <th>Kelas</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data siswa akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Tugas & Kuis Section -->
+                <div id="tugas-guru" class="content-section">
+                    <div class="section-header">
+                        <h2>Tugas & Kuis</h2>
+                        <div>
+                            <button class="btn btn-primary" id="buatTugasBtn">
+                                <i class="fas fa-plus"></i> Buat Tugas
+                            </button>
+                            <button class="btn btn-success" id="buatKuisBtn">
+                                <i class="fas fa-plus"></i> Buat Kuis
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-tab="tugas-aktif">Tugas Aktif</div>
+                        <div class="tab" data-tab="tugas-selesai">Tugas Selesai</div>
+                        <div class="tab" data-tab="kuis">Kuis</div>
+                        <div class="tab" data-tab="arsip">Arsip</div>
+                        <div class="tab" data-tab="semua">Semua</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="tugas-aktif">
+                        <div class="tugas-stats">
+                            <div class="stat-card">
+                                <h3 id="totalTugasAktif">0</h3>
+                                <p>Total Tugas Aktif</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="totalPengumpulanAktif">0</h3>
+                                <p>Total Pengumpulan</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="rataPengumpulanAktif">0%</h3>
+                                <p>Rata-rata Pengumpulan</p>
+                            </div>
+                        </div>
+                        
+                        <div id="tugasAktifCards">
+                            <!-- Tugas aktif akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tugas-selesai">
+                        <div class="tugas-stats">
+                            <div class="stat-card">
+                                <h3 id="totalTugasSelesai">0</h3>
+                                <p>Total Tugas Selesai</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="totalPengumpulanSelesai">0</h3>
+                                <p>Total Pengumpulan</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="rataPengumpulanSelesai">0%</h3>
+                                <p>Rata-rata Pengumpulan</p>
+                            </div>
+                        </div>
+                        
+                        <div id="tugasSelesaiCards">
+                            <!-- Tugas selesai akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="kuis">
+                        <div class="tugas-stats">
+                            <div class="stat-card">
+                                <h3 id="totalKuis">0</h3>
+                                <p>Total Kuis</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="totalPengumpulanKuis">0</h3>
+                                <p>Total Pengumpulan</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="rataPengumpulanKuis">0%</h3>
+                                <p>Rata-rata Pengumpulan</p>
+                            </div>
+                        </div>
+                        
+                        <div id="kuisCards">
+                            <!-- Kuis akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="arsip">
+                        <div id="arsipCards">
+                            <!-- Arsip akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="semua">
+                        <div id="semuaCards">
+                            <!-- Semua tugas akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nilai & Laporan Section -->
+                <div id="nilai" class="content-section">
+                    <div class="section-header">
+                        <h2>Nilai & Laporan</h2>
+                        <div>
+                            <button class="btn btn-primary" id="inputNilaiBtn">
+                                <i class="fas fa-edit"></i> Input Nilai
+                            </button>
+                            <button class="btn btn-success" id="exportLaporanBtn">
+                                <i class="fas fa-download"></i> Export Laporan
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="filterKelas">Filter Kelas</label>
+                        <select id="filterKelas" class="form-control">
+                            <option value="all">Semua Kelas</option>
+                            <option value="X IPA 1">X IPA 1</option>
+                            <option value="X IPA 2">X IPA 2</option>
+                            <option value="X IPA 3">X IPA 3</option>
+                        </select>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Siswa</th>
+                                <th>Kelas</th>
+                                <th>Tugas 1</th>
+                                <th>Tugas 2</th>
+                                <th>Kuis 1</th>
+                                <th>UTS</th>
+                                <th>UAS</th>
+                                <th>Rata-rata</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelNilai">
+                            <!-- Data nilai akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Absensi Section -->
+                <div id="absensi" class="content-section">
+                    <div class="section-header">
+                        <h2>Absensi Siswa</h2>
+                        <div>
+                            <button class="btn btn-primary" id="ambilAbsensiBtn">
+                                <i class="fas fa-clipboard-check"></i> Ambil Absensi
+                            </button>
+                            <button class="btn btn-success" id="exportAbsensiBtn">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="attendance-status">
+                        <div class="status-item">
+                            <h3 id="hadirCount">25</h3>
+                            <p>Hadir</p>
+                        </div>
+                        <div class="status-item">
+                            <h3 id="izinCount">3</h3>
+                            <p>Izin</p>
+                        </div>
+                        <div class="status-item">
+                            <h3 id="sakitCount">2</h3>
+                            <p>Sakit</p>
+                        </div>
+                        <div class="status-item">
+                            <h3 id="alpaCount">2</h3>
+                            <p>Alpa</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="filterTanggalAbsensi">Filter Tanggal</label>
+                        <input type="date" id="filterTanggalAbsensi" class="form-control">
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Siswa</th>
+                                <th>Kelas</th>
+                                <th>Tanggal</th>
+                                <th>Status</th>
+                                <th>Keterangan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelAbsensi">
+                            <!-- Data absensi akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Jadwal Pelajaran Section -->
+                <div id="jadwal" class="content-section">
+                    <div class="section-header">
+                        <h2>Jadwal Pelajaran</h2>
+                        <button class="btn btn-primary" id="tambahJadwalBtn">
+                            <i class="fas fa-plus"></i> Tambah Jadwal
+                        </button>
+                    </div>
+                    
+                    <div class="chart-container" id="kalenderJadwal">
+                        <p>Kalender jadwal akan ditampilkan di sini</p>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Hari</th>
+                                <th>Waktu</th>
+                                <th>Kelas</th>
+                                <th>Mata Pelajaran</th>
+                                <th>Ruangan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelJadwal">
+                            <!-- Data jadwal akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Materi Pembelajaran Section -->
+                <div id="materi-guru" class="content-section">
+                    <div class="section-header">
+                        <h2>Materi Pembelajaran</h2>
+                        <button class="btn btn-primary" id="tambahMateriBtn">
+                            <i class="fas fa-plus"></i> Tambah Materi
+                        </button>
+                    </div>
+                    
+                    <div class="dashboard-cards" id="daftarMateri">
+                        <!-- Materi akan diisi oleh JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Pengumuman Section -->
+                <div id="pengumuman-guru" class="content-section">
+                    <div class="section-header">
+                        <h2>Pengumuman</h2>
+                        <button class="btn btn-primary" id="tambahPengumumanBtn">
+                            <i class="fas fa-plus"></i> Buat Pengumuman
+                        </button>
+                    </div>
+                    
+                    <div id="daftarPengumuman">
+                        <!-- Pengumuman akan diisi oleh JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Analisis Section -->
+                <div id="analisis" class="content-section">
+                    <div class="section-header">
+                        <h2>Analisis Data</h2>
+                    </div>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-tab="analisis-prestasi">Prestasi Siswa</div>
+                        <div class="tab" data-tab="analisis-kehadiran">Kehadiran</div>
+                        <div class="tab" data-tab="analisis-tugas">Tugas & Kuis</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="analisis-prestasi">
+                        <div class="chart-container">
+                            <p>Grafik analisis prestasi siswa akan ditampilkan di sini</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="analisis-kehadiran">
+                        <div class="chart-container">
+                            <p>Grafik analisis kehadiran siswa akan ditampilkan di sini</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="analisis-tugas">
+                        <div class="chart-container">
+                            <p>Grafik analisis tugas dan kuis akan ditampilkan di sini</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pengaturan Section -->
+                <div id="pengaturan" class="content-section">
+                    <div class="section-header">
+                        <h2>Pengaturan Sistem</h2>
+                    </div>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-tab="pengaturan-umum">Umum</div>
+                        <div class="tab" data-tab="pengaturan-notifikasi">Notifikasi</div>
+                        <div class="tab" data-tab="pengaturan-keamanan">Keamanan</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="pengaturan-umum">
+                        <div class="form-group">
+                            <label for="namaSekolah">Nama Sekolah</label>
+                            <input type="text" id="namaSekolah" class="form-control" value="SMA Negeri 1 Jakarta">
+                        </div>
+                        <div class="form-group">
+                            <label for="tahunAjaran">Tahun Ajaran</label>
+                            <input type="text" id="tahunAjaran" class="form-control" value="2023/2024">
+                        </div>
+                        <div class="form-group">
+                            <label for="semester">Semester</label>
+                            <select id="semester" class="form-control">
+                                <option value="1">Semester 1</option>
+                                <option value="2" selected>Semester 2</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary">Simpan Pengaturan</button>
+                    </div>
+                    
+                    <div class="tab-content" id="pengaturan-notifikasi">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" checked> Notifikasi tugas baru
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" checked> Notifikasi pengumpulan tugas
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox"> Notifikasi absensi
+                            </label>
+                        </div>
+                        <button class="btn btn-primary">Simpan Pengaturan</button>
+                    </div>
+                    
+                    <div class="tab-content" id="pengaturan-keamanan">
+                        <div class="form-group">
+                            <label for="passwordLama">Password Lama</label>
+                            <input type="password" id="passwordLama" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordBaru">Password Baru</label>
+                            <input type="password" id="passwordBaru" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="konfirmasiPassword">Konfirmasi Password</label>
+                            <input type="password" id="konfirmasiPassword" class="form-control">
+                        </div>
+                        <button class="btn btn-primary">Ganti Password</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dashboard Murid -->
+    <div class="dashboard" id="muridDashboard">
+        <div class="container">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Portal Murid</h2>
+                    <p id="muridKelasInfo">Kimia Kelas X</p>
+                </div>
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="active" data-target="dashboard-murid"><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li data-target="tugas-murid"><a href="#"><i class="fas fa-tasks"></i> Tugas & Kuis</a></li>
+                        <li data-target="nilai-murid"><a href="#"><i class="fas fa-chart-bar"></i> Nilai Saya</a></li>
+                        <li data-target="materi-murid"><a href="#"><i class="fas fa-book"></i> Materi Pelajaran</a></li>
+                        <li data-target="pengumuman-murid"><a href="#"><i class="fas fa-bullhorn"></i> Pengumuman</a></li>
+                        <li data-target="profil-murid"><a href="#"><i class="fas fa-user"></i> Profil</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <div class="header">
+                    <h1 id="muridWelcome">Dashboard Murid - Kimia Kelas X</h1>
+                    <div class="user-info">
+                        <img src="https://i.pravatar.cc/150?img=5" alt="Murid" id="muridAvatar">
+                        <div>
+                            <h4 id="muridNama">Nama Murid</h4>
+                            <p id="muridKelas">Kelas</p>
+                        </div>
+                        <button class="logout-btn" id="logoutMurid">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Dashboard Murid -->
+                <div id="dashboard-murid" class="content-section active">
+                    <div class="dashboard-cards">
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <h3 id="tugasAktifMurid">0</h3>
+                                    <p>Tugas Aktif</p>
+                                </div>
+                                <div class="card-icon bg-primary">
+                                    <i class="fas fa-tasks"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <h3 id="tugasSelesaiMurid">0</h3>
+                                    <p>Tugas Selesai</p>
+                                </div>
+                                <div class="card-icon bg-success">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <h3 id="tugasTerlambatMurid">0</h3>
+                                    <p>Tugas Terlambat</p>
+                                </div>
+                                <div class="card-icon bg-warning">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <h3 id="rataNilaiMurid">0</h3>
+                                    <p>Rata-rata Nilai</p>
+                                </div>
+                                <div class="card-icon bg-danger">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tugas Terbaru -->
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Tugas Terbaru</h2>
+                        </div>
+                        <div id="tugasTerbaruCards">
+                            <!-- Tugas akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tugas & Kuis Murid -->
+                <div id="tugas-murid" class="content-section">
+                    <div class="section-header">
+                        <h2>Tugas & Kuis Saya</h2>
+                    </div>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-tab="tugas-murid-aktif">Tugas Aktif</div>
+                        <div class="tab" data-tab="tugas-murid-selesai">Tugas Selesai</div>
+                        <div class="tab" data-tab="tugas-murid-semua">Semua Tugas</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="tugas-murid-aktif">
+                        <div id="tugasMuridAktifCards">
+                            <!-- Tugas aktif akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tugas-murid-selesai">
+                        <div id="tugasMuridSelesaiCards">
+                            <!-- Tugas selesai akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tugas-murid-semua">
+                        <div id="tugasMuridSemuaCards">
+                            <!-- Semua tugas akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nilai Murid -->
+                <div id="nilai-murid" class="content-section">
+                    <div class="section-header">
+                        <h2>Nilai Saya</h2>
+                    </div>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-tab="nilai-murid-semua">Semua Nilai</div>
+                        <div class="tab" data-tab="nilai-murid-perkembangan">Perkembangan</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="nilai-murid-semua">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Jenis Penilaian</th>
+                                    <th>Tanggal</th>
+                                    <th>Nilai</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="nilaiMuridTable">
+                                <!-- Data akan diisi oleh JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="tab-content" id="nilai-murid-perkembangan">
+                        <div class="chart-container">
+                            <p>Grafik perkembangan nilai akan ditampilkan di sini</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Materi Pelajaran -->
+                <div id="materi-murid" class="content-section">
+                    <div class="section-header">
+                        <h2>Materi Pelajaran</h2>
+                    </div>
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-tab="materi-murid-semua">Semua Materi</div>
+                        <div class="tab" data-tab="materi-murid-terbaru">Terbaru</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="materi-murid-semua">
+                        <div class="dashboard-cards" id="materiMuridList">
+                            <!-- Materi akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="materi-murid-terbaru">
+                        <div class="dashboard-cards" id="materiMuridTerbaruList">
+                            <!-- Materi terbaru akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pengumuman -->
+                <div id="pengumuman-murid" class="content-section">
+                    <div class="section-header">
+                        <h2>Pengumuman</h2>
+                    </div>
+                    
+                    <div id="pengumumanMuridList">
+                        <!-- Pengumuman akan diisi oleh JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Profil Murid -->
+                <div id="profil-murid" class="content-section">
+                    <div class="section-header">
+                        <h2>Profil Saya</h2>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="muridNamaProfil">Nama Lengkap</label>
+                        <input type="text" id="muridNamaProfil" class="form-control" value="Nama Murid">
+                    </div>
+                    <div class="form-group">
+                        <label for="muridEmailProfil">Email</label>
+                        <input type="email" id="muridEmailProfil" class="form-control" value="murid@sekolah.sch.id">
+                    </div>
+                    <div class="form-group">
+                        <label for="muridKelasProfil">Kelas</label>
+                        <input type="text" id="muridKelasProfil" class="form-control" value="X IPA 1" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="muridNISProfil">NIS</label>
+                        <input type="text" id="muridNISProfil" class="form-control" value="2023001" readonly>
+                    </div>
+                    <button class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal untuk berbagai fitur -->
+    <div class="modal" id="detailTugasModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="detailTugasTitle">Detail Tugas</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Judul Tugas</label>
+                    <p id="detailJudul" class="form-control" style="background: #f8f9fa;"></p>
+                </div>
+                <div class="form-group">
+                    <label>Mata Pelajaran</label>
+                    <p id="detailMapel" class="form-control" style="background: #f8f9fa;"></p>
+                </div>
+                <div class="form-group">
+                    <label>Kelas</label>
+                    <p id="detailKelas" class="form-control" style="background: #f8f9fa;"></p>
+                </div>
+                <div class="form-group">
+                    <label>Deskripsi</label>
+                    <p id="detailDeskripsi" class="form-control" style="background: #f8f9fa; min-height: 100px;"></p>
+                </div>
+                <div class="form-group">
+                    <label>Batas Waktu</label>
+                    <p id="detailBatasWaktu" class="form-control" style="background: #f8f9fa;"></p>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <p id="detailStatus" class="form-control" style="background: #f8f9fa;"></p>
+                </div>
+                
+                <div class="section-header">
+                    <h4>Daftar Pengumpulan</h4>
+                    <div id="pengumpulanStats">
+                        <span id="pengumpulanCount">0</span> dari <span id="totalSiswaCount">0</span> siswa
+                    </div>
+                </div>
+                
+                <div id="daftarPengumpulan">
+                    <!-- Daftar pengumpulan akan diisi oleh JavaScript -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary close">Tutup</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="kumpulkanTugasModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Kumpulkan Tugas</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formKumpulkanTugas">
+                    <div class="form-group">
+                        <label for="namaTugasKumpul">Judul Tugas</label>
+                        <p id="namaTugasKumpul" class="form-control" style="background: #f8f9fa;"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="fileTugas">Upload File Tugas</label>
+                        <input type="file" id="fileTugas" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="catatanTugasMurid">Catatan (Opsional)</label>
+                        <textarea id="catatanTugasMurid" class="form-control" rows="3" placeholder="Tambahkan catatan untuk guru"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger close">Batal</button>
+                <button class="btn btn-primary" id="simpanKumpulanBtn">Kumpulkan</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Tambah Siswa -->
+    <div class="modal" id="tambahSiswaModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalSiswaTitle">Tambah Siswa Baru</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formTambahSiswa">
+                    <div class="form-group">
+                        <label for="namaSiswa">Nama Lengkap</label>
+                        <input type="text" id="namaSiswa" class="form-control" placeholder="Masukkan nama siswa" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nisSiswa">NIS</label>
+                        <input type="text" id="nisSiswa" class="form-control" placeholder="Masukkan NIS" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailSiswa">Email</label>
+                        <input type="email" id="emailSiswa" class="form-control" placeholder="Masukkan email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="kelasSiswa">Kelas</label>
+                        <select id="kelasSiswa" class="form-control" required>
+                            <option value="">Pilih Kelas</option>
+                            <option value="X IPA 1">X IPA 1</option>
+                            <option value="X IPA 2">X IPA 2</option>
+                            <option value="X IPA 3">X IPA 3</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger close">Batal</button>
+                <button class="btn btn-primary" id="simpanSiswaBtn">Simpan</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Buat Tugas -->
+    <div class="modal" id="buatTugasModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTugasTitle">Buat Tugas Baru</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formBuatTugas">
+                    <div class="form-group">
+                        <label for="judulTugas">Judul Tugas</label>
+                        <input type="text" id="judulTugas" class="form-control" placeholder="Masukkan judul tugas" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mataPelajaran">Mata Pelajaran</label>
+                        <select id="mataPelajaran" class="form-control" required>
+                            <option value="Kimia">Kimia</option>
+                            <option value="Fisika">Fisika</option>
+                            <option value="Biologi">Biologi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="kelasTugas">Kelas</label>
+                        <select id="kelasTugas" class="form-control" required>
+                            <option value="X IPA 1">X IPA 1</option>
+                            <option value="X IPA 2">X IPA 2</option>
+                            <option value="X IPA 3">X IPA 3</option>
+                            <option value="Semua Kelas">Semua Kelas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="deskripsiTugas">Deskripsi Tugas</label>
+                        <textarea id="deskripsiTugas" class="form-control" rows="4" placeholder="Masukkan deskripsi tugas" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="batasWaktu">Batas Waktu</label>
+                        <input type="datetime-local" id="batasWaktu" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lampiranTugas">Lampiran (Opsional)</label>
+                        <input type="file" id="lampiranTugas" class="form-control">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger close">Batal</button>
+                <button class="btn btn-primary" id="simpanTugasBtn">Simpan</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Nilai Tugas -->
+    <div class="modal" id="nilaiTugasModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Beri Nilai Tugas</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formNilaiTugas">
+                    <div class="form-group">
+                        <label for="siswaNilai">Siswa</label>
+                        <p id="siswaNilaiNama" class="form-control" style="background: #f8f9fa;"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="tugasNilai">Tugas</label>
+                        <p id="tugasNilaiJudul" class="form-control" style="background: #f8f9fa;"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="nilaiTugas">Nilai (0-100)</label>
+                        <input type="number" id="nilaiTugas" class="form-control" min="0" max="100" placeholder="Masukkan nilai" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="catatanTugas">Catatan (Opsional)</label>
+                        <textarea id="catatanTugas" class="form-control" rows="3" placeholder="Masukkan catatan untuk siswa"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger close">Batal</button>
+                <button class="btn btn-primary" id="simpanNilaiTugasBtn">Simpan Nilai</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Input Nilai -->
+    <div class="modal" id="inputNilaiModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Input Nilai Siswa</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formInputNilai">
+                    <div class="form-group">
+                        <label for="siswaNilai">Pilih Siswa</label>
+                        <select id="siswaNilai" class="form-control" required>
+                            <option value="">Pilih Siswa</option>
+                            <!-- Opsi siswa akan diisi oleh JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="jenisNilai">Jenis Nilai</label>
+                        <select id="jenisNilai" class="form-control" required>
+                            <option value="tugas1">Tugas 1</option>
+                            <option value="tugas2">Tugas 2</option>
+                            <option value="kuis1">Kuis 1</option>
+                            <option value="uts">UTS</option>
+                            <option value="uas">UAS</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nilai">Nilai</label>
+                        <input type="number" id="nilai" class="form-control" min="0" max="100" placeholder="Masukkan nilai" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger close">Batal</button>
+                <button class="btn btn-primary" id="simpanNilaiBtn">Simpan</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Ambil Absensi -->
+    <div class="modal" id="ambilAbsensiModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ambil Absensi</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formAmbilAbsensi">
+                    <div class="form-group">
+                        <label for="kelasAbsensi">Kelas</label>
+                        <select id="kelasAbsensi" class="form-control" required>
+                            <option value="X IPA 1">X IPA 1</option>
+                            <option value="X IPA 2">X IPA 2</option>
+                            <option value="X IPA 3">X IPA 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggalAbsensi">Tanggal</label>
+                        <input type="date" id="tanggalAbsensi" class="form-control" required>
+                    </div>
+                    <div id="daftarSiswaAbsensi">
+                        <!-- Daftar siswa untuk absensi akan diisi oleh JavaScript -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger close">Batal</button>
+                <button class="btn btn-primary" id="simpanAbsensiBtn">Simpan Absensi</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Tambah Jadwal -->
+    <div class="modal" id="tambahJadwalModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Tambah Jadwal Pelajaran</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formTambahJadwal">
+                    <div class="form-group">
+                        <label for="hariJadwal">Hari</label>
+                        <select id="hariJadwal" class="form-control" required>
+                            <option value="">Pilih Hari</option>
+                            <option value="Senin">Senin</option>
+                            <option value="Selasa">Selasa</option>
+                            <option value="Rabu">Rabu</option>
+                            <option value="Kamis">Kamis</option>
+                            <option value="Jumat">Jumat</option>
+                            <option value="Sabtu">Sabtu</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="waktuMulai">Waktu Mulai</label>
+                        <input type="time" id="waktuMulai" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="waktuSelesai">Waktu Selesai</label>
+                        <input type="time" id="waktuSelesai" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="kelasJadwal">Kelas</label>
+                        <select id="kelasJadwal" class="form-control" required>
+                            <option value="X IPA 1">X IPA 1</option>
+                            <option value="X IPA 2">X IPA 2</option>
+                            <option value="X IPA 3">X IPA 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mataPelajaranJadwal">Mata Pelajaran</label>
+                        <input type="text" id="mataPelajaranJadwal" class="form-control" value="Kimia" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="ruanganJadwal">Ruangan</label>
+                        <input type="text" id="ruanganJadwal" class="form-control" placeholder="Masukkan ruangan" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger close">Batal</button>
+                <button class="btn btn-primary" id="simpanJadwalBtn">Simpan</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Tambah Materi -->
+    <div class="modal" id="tambahMateriModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Tambah Materi Pembelajaran</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formTambahMateri">
+                    <div class="form-group">
+                        <label for="judulMateri">Judul Materi</label>
+                        <input type="text" id="judulMateri" class="form-control" placeholder="Masukkan judul materi" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="deskripsiMateri">Deskripsi Materi</label>
+                        <textarea id="deskripsiMateri" class="form-control" rows="3" placeholder="Masukkan deskripsi materi" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="kelasMateri">Kelas</label>
+                        <select id="kelasMateri" class="form-control" required>
+                            <option value="X IPA 1">X IPA 1</option>
+                            <option value="X IPA 2">X IPA 2</option>
+                            <option value="X IPA 3">X IPA 3</option>
+                            <option value="Semua Kelas">Semua Kelas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipeMateri">Tipe Materi</label>
+                        <select id="tipeMateri" class="form-control" required>
+                            <option value="PDF">PDF</option>
+                            <option value="Video">Video</option>
+                            <option value="Presentasi">Presentasi</option>
+                            <option value="Teks">Teks</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fileMateri">File Materi</label>
+                        <input type="file" id="fileMateri" class="form-control" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger close">Batal</button>
+                <button class="btn btn-primary" id="simpanMateriBtn">Simpan</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Tambah Pengumuman -->
+    <div class="modal" id="tambahPengumumanModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Buat Pengumuman</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formTambahPengumuman">
+                    <div class="form-group">
+                        <label for="judulPengumuman">Judul Pengumuman</label>
+                        <input type="text" id="judulPengumuman" class="form-control" placeholder="Masukkan judul pengumuman" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="isiPengumuman">Isi Pengumuman</label>
+                        <textarea id="isiPengumuman" class="form-control" rows="5" placeholder="Masukkan isi pengumuman" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="kelasPengumuman">Kelas Tujuan</label>
+                        <select id="kelasPengumuman" class="form-control" required>
+                            <option value="X IPA 1">X IPA 1</option>
+                            <option value="X IPA 2">X IPA 2</option>
+                            <option value="X IPA 3">X IPA 3</option>
+                            <option value="Semua Kelas">Semua Kelas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="prioritasPengumuman">Prioritas</label>
+                        <select id="prioritasPengumuman" class="form-control" required>
+                            <option value="normal">Normal</option>
+                            <option value="penting">Penting</option>
+                            <option value="sangat-penting">Sangat Penting</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger close">Batal</button>
+                <button class="btn btn-primary" id="simpanPengumumanBtn">Simpan</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+    
+    <script>
+        // Data Pengguna
+        const users = {
+            guru: [
+                { username: 'guru', password: '123', nama: 'Bu Sari, M.Pd', kelas: null }
+            ],
+            murid: [
+                { username: 'ahmad', password: '123', nama: 'Ahmad Fauzi', kelas: 'X IPA 1' },
+                { username: 'budi', password: '123', nama: 'Budi Santoso', kelas: 'X IPA 1' },
+                { username: 'citra', password: '123', nama: 'Citra Lestari', kelas: 'X IPA 2' },
+                { username: 'dewi', password: '123', nama: 'Dewi Anggraini', kelas: 'X IPA 2' },
+                { username: 'eko', password: '123', nama: 'Eko Prasetyo', kelas: 'X IPA 3' },
+                { username: 'fajar', password: '123', nama: 'Fajar Nugroho', kelas: 'X IPA 3' },
+                { username: 'gita', password: '123', nama: 'Gita Maharani', kelas: 'X IPA 1' },
+                { username: 'hadi', password: '123', nama: 'Hadi Pranoto', kelas: 'X IPA 2' },
+                { username: 'indra', password: '123', nama: 'Indra Wijaya', kelas: 'X IPA 3' },
+                { username: 'julia', password: '123', nama: 'Julia Sari', kelas: 'X IPA 1' },
+                { username: 'murid', password: '123', nama: 'Murid Demo', kelas: 'X IPA 1' }
+            ]
+        };
+
+        // Data untuk aplikasi
+        let dataSiswa = [
+            { id: 1, nama: "Ahmad Fauzi", nis: "2023001", email: "ahmad@sekolah.sch.id", kelas: "X IPA 1", status: "Aktif" },
+            { id: 2, nama: "Budi Santoso", nis: "2023002", email: "budi@sekolah.sch.id", kelas: "X IPA 1", status: "Aktif" },
+            { id: 3, nama: "Citra Lestari", nis: "2023003", email: "citra@sekolah.sch.id", kelas: "X IPA 2", status: "Aktif" },
+            { id: 4, nama: "Dewi Anggraini", nis: "2023004", email: "dewi@sekolah.sch.id", kelas: "X IPA 2", status: "Aktif" },
+            { id: 5, nama: "Eko Prasetyo", nis: "2023005", email: "eko@sekolah.sch.id", kelas: "X IPA 3", status: "Aktif" },
+            { id: 6, nama: "Fajar Nugroho", nis: "2023006", email: "fajar@sekolah.sch.id", kelas: "X IPA 3", status: "Aktif" },
+            { id: 7, nama: "Gita Maharani", nis: "2023007", email: "gita@sekolah.sch.id", kelas: "X IPA 1", status: "Aktif" },
+            { id: 8, nama: "Hadi Pranoto", nis: "2023008", email: "hadi@sekolah.sch.id", kelas: "X IPA 2", status: "Aktif" },
+            { id: 9, nama: "Indra Wijaya", nis: "2023009", email: "indra@sekolah.sch.id", kelas: "X IPA 3", status: "Aktif" },
+            { id: 10, nama: "Julia Sari", nis: "2023010", email: "julia@sekolah.sch.id", kelas: "X IPA 1", status: "Aktif" }
+        ];
+
+        let dataTugas = [
+            { 
+                id: 1, 
+                judul: "Struktur Atom dan Sistem Periodik", 
+                mapel: "Kimia", 
+                kelas: "X IPA 1", 
+                tglDibuat: "2023-10-15", 
+                batasWaktu: "2023-10-22", 
+                status: "Aktif", 
+                tipe: "tugas",
+                deskripsi: "Kerjakan soal-soal berikut dengan lengkap dan jelas. Tulis jawaban pada kertas folio.",
+                lampiran: "soal-struktur-atom.pdf"
+            },
+            { 
+                id: 2, 
+                judul: "Ikatan Kimia - Kuis Singkat", 
+                mapel: "Kimia", 
+                kelas: "X IPA 2", 
+                tglDibuat: "2023-10-10", 
+                batasWaktu: "2023-10-17", 
+                status: "Selesai", 
+                tipe: "kuis",
+                deskripsi: "Kuis singkat tentang ikatan kimia. Waktu pengerjaan 30 menit.",
+                lampiran: ""
+            },
+            { 
+                id: 3, 
+                judul: "Laporan Praktikum Reaksi Redoks", 
+                mapel: "Kimia", 
+                kelas: "Semua Kelas", 
+                tglDibuat: "2023-10-05", 
+                batasWaktu: "2023-10-12", 
+                status: "Dinilai", 
+                tipe: "tugas",
+                deskripsi: "Buat laporan praktikum reaksi redoks sesuai format yang telah diberikan.",
+                lampiran: "format-laporan.pdf"
+            },
+            { 
+                id: 4, 
+                judul: "Tata Nama Senyawa Kimia", 
+                mapel: "Kimia", 
+                kelas: "X IPA 3", 
+                tglDibuat: "2023-10-18", 
+                batasWaktu: "2023-10-25", 
+                status: "Aktif", 
+                tipe: "tugas",
+                deskripsi: "Tuliskan nama senyawa-senyawa kimia berikut dan sebutkan jenis ikatannya.",
+                lampiran: "soal-tata-nama.docx"
+            },
+            { 
+                id: 5, 
+                judul: "Kuis Larutan Elektrolit dan Non-Elektrolit", 
+                mapel: "Kimia", 
+                kelas: "X IPA 1", 
+                tglDibuat: "2023-10-20", 
+                batasWaktu: "2023-10-27", 
+                status: "Aktif", 
+                tipe: "kuis",
+                deskripsi: "Kuis tentang larutan elektrolit dan non-elektrolit. Waktu pengerjaan 45 menit.",
+                lampiran: ""
+            },
+            { 
+                id: 6, 
+                judul: "Tugas Termokimia", 
+                mapel: "Kimia", 
+                kelas: "X IPA 2", 
+                tglDibuat: "2023-10-08", 
+                batasWaktu: "2023-10-15", 
+                status: "Selesai", 
+                tipe: "tugas",
+                deskripsi: "Kerjakan soal-soal termokimia berikut dengan teliti.",
+                lampiran: "soal-termokimia.pdf"
+            },
+            { 
+                id: 7, 
+                judul: "Laporan Praktikum Titrasi Asam Basa", 
+                mapel: "Kimia", 
+                kelas: "Semua Kelas", 
+                tglDibuat: "2023-10-25", 
+                batasWaktu: "2023-11-01", 
+                status: "Aktif", 
+                tipe: "tugas",
+                deskripsi: "Buat laporan praktikum titrasi asam basa sesuai hasil percobaan.",
+                lampiran: "panduan-titrasi.pdf"
+            }
+        ];
+
+        let dataPengumpulan = [
+            { 
+                id: 1, 
+                tugasId: 1, 
+                siswaId: 1, 
+                nama: "Ahmad Fauzi", 
+                kelas: "X IPA 1", 
+                tanggalKirim: "2023-10-20 14:30:00", 
+                file: "tugas-ahmad.pdf",
+                nilai: 85,
+                catatan: "Bagus, lengkap dan rapi",
+                status: "Dinilai"
+            },
+            { 
+                id: 2, 
+                tugasId: 1, 
+                siswaId: 2, 
+                nama: "Budi Santoso", 
+                kelas: "X IPA 1", 
+                tanggalKirim: "2023-10-21 09:15:00", 
+                file: "tugas-budi.docx",
+                nilai: null,
+                catatan: "",
+                status: "Dikumpulkan"
+            },
+            { 
+                id: 3, 
+                tugasId: 2, 
+                siswaId: 3, 
+                nama: "Citra Lestari", 
+                kelas: "X IPA 2", 
+                tanggalKirim: "2023-10-15 10:20:00", 
+                file: "kuis-citra.pdf",
+                nilai: 92,
+                catatan: "Excellent!",
+                status: "Dinilai"
+            },
+            { 
+                id: 4, 
+                tugasId: 3, 
+                siswaId: 4, 
+                nama: "Dewi Anggraini", 
+                kelas: "X IPA 2", 
+                tanggalKirim: "2023-10-10 16:45:00", 
+                file: "laporan-dewi.pdf",
+                nilai: 78,
+                catatan: "Kurang lengkap di bagian analisis",
+                status: "Dinilai"
+            },
+            { 
+                id: 5, 
+                tugasId: 3, 
+                siswaId: 5, 
+                nama: "Eko Prasetyo", 
+                kelas: "X IPA 3", 
+                tanggalKirim: "2023-10-11 08:30:00", 
+                file: "laporan-eko.docx",
+                nilai: 88,
+                catatan: "Baik, tapi format perlu diperbaiki",
+                status: "Dinilai"
+            },
+            { 
+                id: 6, 
+                tugasId: 4, 
+                siswaId: 6, 
+                nama: "Fajar Nugroho", 
+                kelas: "X IPA 3", 
+                tanggalKirim: "2023-10-22 11:10:00", 
+                file: "tugas-fajar.pdf",
+                nilai: null,
+                catatan: "",
+                status: "Dikumpulkan"
+            },
+            { 
+                id: 7, 
+                tugasId: 5, 
+                siswaId: 7, 
+                nama: "Gita Maharani", 
+                kelas: "X IPA 1", 
+                tanggalKirim: "2023-10-25 13:20:00", 
+                file: "kuis-gita.pdf",
+                nilai: 95,
+                catatan: "Sangat baik!",
+                status: "Dinilai"
+            },
+            { 
+                id: 8, 
+                tugasId: 6, 
+                siswaId: 8, 
+                nama: "Hadi Pranoto", 
+                kelas: "X IPA 2", 
+                tanggalKirim: "2023-10-12 15:40:00", 
+                file: "tugas-hadi.docx",
+                nilai: 82,
+                catatan: "Cukup baik",
+                status: "Dinilai"
+            }
+        ];
+
+        let dataNilai = [
+            { id: 1, nama: "Ahmad Fauzi", kelas: "X IPA 1", tugas1: 85, tugas2: 90, kuis1: 88, uts: 87, uas: 89 },
+            { id: 2, nama: "Budi Santoso", kelas: "X IPA 1", tugas1: 78, tugas2: 82, kuis1: 80, uts: 79, uas: 81 },
+            { id: 3, nama: "Citra Lestari", kelas: "X IPA 2", tugas1: 92, tugas2: 88, kuis1: 90, uts: 91, uas: 89 },
+            { id: 4, nama: "Dewi Anggraini", kelas: "X IPA 2", tugas1: 75, tugas2: 80, kuis1: 78, uts: 76, uas: 79 },
+            { id: 5, nama: "Eko Prasetyo", kelas: "X IPA 3", tugas1: 88, tugas2: 85, kuis1: 87, uts: 86, uas: 88 },
+            { id: 6, nama: "Fajar Nugroho", kelas: "X IPA 3", tugas1: 82, tugas2: 85, kuis1: 84, uts: 83, uas: 85 },
+            { id: 7, nama: "Gita Maharani", kelas: "X IPA 1", tugas1: 95, tugas2: 92, kuis1: 94, uts: 93, uas: 94 },
+            { id: 8, nama: "Hadi Pranoto", kelas: "X IPA 2", tugas1: 82, tugas2: 78, kuis1: 80, uts: 81, uas: 79 },
+            { id: 9, nama: "Indra Wijaya", kelas: "X IPA 3", tugas1: 90, tugas2: 87, kuis1: 89, uts: 88, uas: 90 },
+            { id: 10, nama: "Julia Sari", kelas: "X IPA 1", tugas1: 88, tugas2: 90, kuis1: 89, uts: 87, uas: 88 }
+        ];
+
+        let dataJadwal = [
+            { id: 1, hari: "Senin", waktuMulai: "07:30", waktuSelesai: "09:00", kelas: "X IPA 1", mapel: "Kimia", ruangan: "Lab. Kimia 1" },
+            { id: 2, hari: "Selasa", waktuMulai: "09:30", waktuSelesai: "11:00", kelas: "X IPA 2", mapel: "Kimia", ruangan: "Lab. Kimia 2" },
+            { id: 3, hari: "Rabu", waktuMulai: "10:00", waktuSelesai: "11:30", kelas: "X IPA 3", mapel: "Kimia", ruangan: "Lab. Kimia 1" },
+            { id: 4, hari: "Kamis", waktuMulai: "07:30", waktuSelesai: "09:00", kelas: "X IPA 1", mapel: "Kimia", ruangan: "Ruang 101" },
+            { id: 5, hari: "Jumat", waktuMulai: "08:00", waktuSelesai: "09:30", kelas: "X IPA 2", mapel: "Kimia", ruangan: "Ruang 102" }
+        ];
+
+        let dataMateri = [
+            { id: 1, judul: "Struktur Atom", deskripsi: "Materi tentang perkembangan teori atom dan struktur atom modern", kelas: "X IPA 1", tipe: "PDF", tglUpload: "2023-10-10" },
+            { id: 2, judul: "Sistem Periodik Unsur", deskripsi: "Pengelompokan unsur-unsur dalam tabel periodik berdasarkan sifat periodik", kelas: "X IPA 2", tipe: "Video", tglUpload: "2023-10-12" },
+            { id: 3, judul: "Ikatan Kimia", deskripsi: "Jenis-jenis ikatan kimia dan sifat-sifat senyawa yang dihasilkan", kelas: "Semua Kelas", tipe: "Presentasi", tglUpload: "2023-10-15" },
+            { id: 4, judul: "Larutan Elektrolit dan Non-Elektrolit", deskripsi: "Konsep larutan elektrolit dan non-elektrolit beserta contohnya", kelas: "X IPA 1", tipe: "PDF", tglUpload: "2023-10-18" },
+            { id: 5, judul: "Termokimia", deskripsi: "Konsep perubahan energi dalam reaksi kimia", kelas: "X IPA 2", tipe: "Video", tglUpload: "2023-10-20" },
+            { id: 6, judul: "Titrasi Asam Basa", deskripsi: "Teknik titrasi untuk menentukan konsentrasi larutan", kelas: "Semua Kelas", tipe: "Presentasi", tglUpload: "2023-10-25" }
+        ];
+
+        let dataAbsensi = [
+            { id: 1, siswaId: 1, nama: "Ahmad Fauzi", kelas: "X IPA 1", tanggal: "2023-10-20", status: "Hadir", keterangan: "" },
+            { id: 2, siswaId: 2, nama: "Budi Santoso", kelas: "X IPA 1", tanggal: "2023-10-20", status: "Hadir", keterangan: "" },
+            { id: 3, siswaId: 3, nama: "Citra Lestari", kelas: "X IPA 2", tanggal: "2023-10-20", status: "Izin", keterangan: "Acara keluarga" },
+            { id: 4, siswaId: 4, nama: "Dewi Anggraini", kelas: "X IPA 2", tanggal: "2023-10-20", status: "Sakit", keterangan: "Flu" },
+            { id: 5, siswaId: 5, nama: "Eko Prasetyo", kelas: "X IPA 3", tanggal: "2023-10-20", status: "Hadir", keterangan: "" },
+            { id: 6, siswaId: 6, nama: "Fajar Nugroho", kelas: "X IPA 3", tanggal: "2023-10-20", status: "Hadir", keterangan: "" },
+            { id: 7, siswaId: 7, nama: "Gita Maharani", kelas: "X IPA 1", tanggal: "2023-10-20", status: "Hadir", keterangan: "" },
+            { id: 8, siswaId: 8, nama: "Hadi Pranoto", kelas: "X IPA 2", tanggal: "2023-10-20", status: "Alpa", keterangan: "" },
+            { id: 9, siswaId: 9, nama: "Indra Wijaya", kelas: "X IPA 3", tanggal: "2023-10-20", status: "Hadir", keterangan: "" },
+            { id: 10, siswaId: 10, nama: "Julia Sari", kelas: "X IPA 1", tanggal: "2023-10-20", status: "Hadir", keterangan: "" }
+        ];
+
+        let dataPengumuman = [
+            { id: 1, judul: "Ujian Tengah Semester", isi: "UTS akan dilaksanakan pada tanggal 27-30 Maret 2023. Silakan persiapkan diri dengan baik.", kelas: "Semua Kelas", prioritas: "penting", tanggal: "2023-10-15" },
+            { id: 2, judul: "Praktikum Kimia", isi: "Praktikum untuk materi reaksi redoks akan dilaksanakan minggu depan. Bawa perlengkapan praktikum.", kelas: "X IPA 1", prioritas: "normal", tanggal: "2023-10-18" },
+            { id: 3, judul: "Perubahan Jadwal Pelajaran", isi: "Karena ada kegiatan sekolah, jadwal pelajaran kimia untuk kelas X IPA 2 pada hari Selasa akan dipindahkan ke hari Rabu.", kelas: "X IPA 2", prioritas: "penting", tanggal: "2023-10-22" },
+            { id: 4, judul: "Pengumuman Hasil Kuis", isi: "Hasil kuis ikatan kimia sudah dapat dilihat di portal. Silakan cek nilai masing-masing.", kelas: "X IPA 2", prioritas: "normal", tanggal: "2023-10-19" },
+            { id: 5, judul: "Remedial UTS", isi: "Bagi siswa yang nilainya di bawah KKM pada UTS, akan diadakan remedial pada tanggal 5 November 2023.", kelas: "Semua Kelas", prioritas: "sangat-penting", tanggal: "2023-10-25" },
+            { id: 6, judul: "Peringatan Batas Waktu Tugas", isi: "Ingatkan batas waktu pengumpulan tugas struktur atom adalah besok. Jangan sampai terlambat!", kelas: "X IPA 1", prioritas: "penting", tanggal: "2023-10-21" }
+        ];
+
+        // Variabel global
+        let currentUser = null;
+        let currentRole = null;
+        let currentTugasId = null;
+
+        // Inisialisasi Aplikasi
+        document.addEventListener('DOMContentLoaded', function() {
+            initLoginPage();
+            checkExistingLogin();
+            showAlertMessage();
+        });
+
+        function showAlertMessage() {
+            const alertMessage = document.getElementById('alertMessage');
+            alertMessage.style.display = 'block';
+        }
+
+        function initLoginPage() {
+            // Role selector
+            const roleOptions = document.querySelectorAll('.role-option');
+            const kelasContainer = document.getElementById('kelasContainer');
+            
+            roleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    roleOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const role = this.getAttribute('data-role');
+                    if (role === 'murid') {
+                        kelasContainer.style.display = 'block';
+                    } else {
+                        kelasContainer.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Form login
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleLogin();
+            });
+            
+            // Demo account buttons
+            const demoButtons = document.querySelectorAll('.demo-btn');
+            demoButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const username = this.getAttribute('data-username');
+                    const password = this.getAttribute('data-password');
+                    
+                    document.getElementById('username').value = username;
+                    document.getElementById('password').value = password;
+                    
+                    // Set role based on username
+                    const role = username === 'guru' ? 'guru' : 'murid';
+                    const roleOptions = document.querySelectorAll('.role-option');
+                    roleOptions.forEach(opt => {
+                        opt.classList.remove('active');
+                        if (opt.getAttribute('data-role') === role) {
+                            opt.classList.add('active');
+                        }
+                    });
+                    
+                    if (role === 'murid') {
+                        document.getElementById('kelasContainer').style.display = 'block';
+                        document.getElementById('kelas').value = 'X IPA 1';
+                    } else {
+                        document.getElementById('kelasContainer').style.display = 'none';
+                    }
+                    
+                    // Auto submit after a short delay
+                    setTimeout(() => {
+                        handleLogin();
+                    }, 500);
+                });
+            });
+            
+            // Logout buttons
+            document.getElementById('logoutGuru').addEventListener('click', handleLogout);
+            document.getElementById('logoutMurid').addEventListener('click', handleLogout);
+            
+            // Navigation
+            initGuruNavigation();
+            initMuridNavigation();
+            
+            // Inisialisasi modal
+            initModals();
+            
+            // Inisialisasi tabs
+            initTabs();
+            
+            // Inisialisasi event listener lainnya
+            initEventListeners();
+            
+            // Set tanggal default untuk form
+            setDefaultDates();
+        }
+
+        function initModals() {
+            // Modal Tambah Siswa
+            const tambahSiswaBtn = document.getElementById('tambahSiswaBtn');
+            const tambahSiswaModal = document.getElementById('tambahSiswaModal');
+            const simpanSiswaBtn = document.getElementById('simpanSiswaBtn');
+            
+            tambahSiswaBtn.addEventListener('click', function() {
+                document.getElementById('modalSiswaTitle').textContent = 'Tambah Siswa Baru';
+                tambahSiswaModal.style.display = 'flex';
+                document.getElementById('formTambahSiswa').reset();
+            });
+            
+            // Modal Buat Tugas
+            const buatTugasBtn = document.getElementById('buatTugasBtn');
+            const buatKuisBtn = document.getElementById('buatKuisBtn');
+            const buatTugasModal = document.getElementById('buatTugasModal');
+            const simpanTugasBtn = document.getElementById('simpanTugasBtn');
+            
+            buatTugasBtn.addEventListener('click', function() {
+                document.getElementById('modalTugasTitle').textContent = 'Buat Tugas Baru';
+                buatTugasModal.style.display = 'flex';
+                document.getElementById('formBuatTugas').reset();
+                
+                // Set default batas waktu (3 hari dari sekarang)
+                const now = new Date();
+                now.setDate(now.getDate() + 3);
+                const defaultDate = now.toISOString().slice(0, 16);
+                document.getElementById('batasWaktu').value = defaultDate;
+            });
+            
+            buatKuisBtn.addEventListener('click', function() {
+                document.getElementById('modalTugasTitle').textContent = 'Buat Kuis Baru';
+                buatTugasModal.style.display = 'flex';
+                document.getElementById('formBuatTugas').reset();
+                
+                // Set judul default untuk kuis
+                document.getElementById('judulTugas').value = 'Kuis Kimia - ';
+                
+                // Set default batas waktu (1 hari dari sekarang)
+                const now = new Date();
+                now.setDate(now.getDate() + 1);
+                const defaultDate = now.toISOString().slice(0, 16);
+                document.getElementById('batasWaktu').value = defaultDate;
+            });
+            
+            // Modal Input Nilai
+            const inputNilaiBtn = document.getElementById('inputNilaiBtn');
+            const inputNilaiModal = document.getElementById('inputNilaiModal');
+            const simpanNilaiBtn = document.getElementById('simpanNilaiBtn');
+            
+            inputNilaiBtn.addEventListener('click', function() {
+                inputNilaiModal.style.display = 'flex';
+                loadSiswaUntukNilai();
+            });
+            
+            // Modal Ambil Absensi
+            const ambilAbsensiBtn = document.getElementById('ambilAbsensiBtn');
+            const ambilAbsensiModal = document.getElementById('ambilAbsensiModal');
+            const simpanAbsensiBtn = document.getElementById('simpanAbsensiBtn');
+            
+            ambilAbsensiBtn.addEventListener('click', function() {
+                ambilAbsensiModal.style.display = 'flex';
+                document.getElementById('formAmbilAbsensi').reset();
+                setDefaultTanggalAbsensi();
+                loadSiswaUntukAbsensi();
+            });
+            
+            // Modal Tambah Jadwal
+            const tambahJadwalBtn = document.getElementById('tambahJadwalBtn');
+            const tambahJadwalModal = document.getElementById('tambahJadwalModal');
+            const simpanJadwalBtn = document.getElementById('simpanJadwalBtn');
+            
+            tambahJadwalBtn.addEventListener('click', function() {
+                tambahJadwalModal.style.display = 'flex';
+                document.getElementById('formTambahJadwal').reset();
+            });
+            
+            // Modal Tambah Materi
+            const tambahMateriBtn = document.getElementById('tambahMateriBtn');
+            const tambahMateriModal = document.getElementById('tambahMateriModal');
+            const simpanMateriBtn = document.getElementById('simpanMateriBtn');
+            
+            tambahMateriBtn.addEventListener('click', function() {
+                tambahMateriModal.style.display = 'flex';
+                document.getElementById('formTambahMateri').reset();
+            });
+            
+            // Modal Tambah Pengumuman
+            const tambahPengumumanBtn = document.getElementById('tambahPengumumanBtn');
+            const tambahPengumumanModal = document.getElementById('tambahPengumumanModal');
+            const simpanPengumumanBtn = document.getElementById('simpanPengumumanBtn');
+            
+            tambahPengumumanBtn.addEventListener('click', function() {
+                tambahPengumumanModal.style.display = 'flex';
+                document.getElementById('formTambahPengumuman').reset();
+            });
+            
+            // Tombol close modal
+            const closeButtons = document.querySelectorAll('.close');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modals = document.querySelectorAll('.modal');
+                    modals.forEach(modal => modal.style.display = 'none');
+                });
+            });
+            
+            // Tutup modal ketika klik di luar
+            window.addEventListener('click', function(event) {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Simpan data siswa
+            simpanSiswaBtn.addEventListener('click', function() {
+                if (document.getElementById('formTambahSiswa').checkValidity()) {
+                    tambahSiswa();
+                } else {
+                    showNotification('Harap isi semua field yang diperlukan', 'error');
+                }
+            });
+            
+            // Simpan data tugas
+            simpanTugasBtn.addEventListener('click', function() {
+                if (document.getElementById('formBuatTugas').checkValidity()) {
+                    tambahTugas();
+                } else {
+                    showNotification('Harap isi semua field yang diperlukan', 'error');
+                }
+            });
+            
+            // Simpan data nilai
+            simpanNilaiBtn.addEventListener('click', function() {
+                if (document.getElementById('formInputNilai').checkValidity()) {
+                    simpanNilai();
+                } else {
+                    showNotification('Harap isi semua field yang diperlukan', 'error');
+                }
+            });
+            
+            // Simpan data absensi
+            simpanAbsensiBtn.addEventListener('click', function() {
+                if (document.getElementById('formAmbilAbsensi').checkValidity()) {
+                    simpanAbsensi();
+                } else {
+                    showNotification('Harap isi semua field yang diperlukan', 'error');
+                }
+            });
+            
+            // Simpan data jadwal
+            simpanJadwalBtn.addEventListener('click', function() {
+                if (document.getElementById('formTambahJadwal').checkValidity()) {
+                    tambahJadwal();
+                } else {
+                    showNotification('Harap isi semua field yang diperlukan', 'error');
+                }
+            });
+            
+            // Simpan data materi
+            simpanMateriBtn.addEventListener('click', function() {
+                if (document.getElementById('formTambahMateri').checkValidity()) {
+                    tambahMateri();
+                } else {
+                    showNotification('Harap isi semua field yang diperlukan', 'error');
+                }
+            });
+            
+            // Simpan data pengumuman
+            simpanPengumumanBtn.addEventListener('click', function() {
+                if (document.getElementById('formTambahPengumuman').checkValidity()) {
+                    tambahPengumuman();
+                } else {
+                    showNotification('Harap isi semua field yang diperlukan', 'error');
+                }
+            });
+            
+            // Simpan nilai tugas
+            const simpanNilaiTugasBtn = document.getElementById('simpanNilaiTugasBtn');
+            simpanNilaiTugasBtn.addEventListener('click', function() {
+                if (document.getElementById('formNilaiTugas').checkValidity()) {
+                    simpanNilaiTugas();
+                } else {
+                    showNotification('Harap isi nilai tugas', 'error');
+                }
+            });
+            
+            // Simpan kumpulan tugas
+            const simpanKumpulanBtn = document.getElementById('simpanKumpulanBtn');
+            simpanKumpulanBtn.addEventListener('click', function() {
+                if (document.getElementById('formKumpulkanTugas').checkValidity()) {
+                    simpanKumpulanTugas();
+                } else {
+                    showNotification('Harap upload file tugas', 'error');
+                }
+            });
+        }
+
+        function initTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Hapus class active dari semua tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Tambah class active ke tab yang diklik
+                    this.classList.add('active');
+                    
+                    // Sembunyikan semua tab content
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Tampilkan tab content yang sesuai
+                    const target = this.getAttribute('data-tab');
+                    document.getElementById(target).classList.add('active');
+                    
+                    // Muat ulang data untuk tab yang dipilih
+                    if (target.includes('tugas') || target === 'kuis' || target === 'arsip' || target === 'semua') {
+                        loadDataTugas();
+                    }
+                });
+            });
+        }
+
+        function initEventListeners() {
+            // Filter kelas untuk data nilai
+            const filterKelas = document.getElementById('filterKelas');
+            filterKelas.addEventListener('change', function() {
+                loadDataNilai(this.value);
+            });
+            
+            // Filter tanggal untuk absensi
+            const filterTanggalAbsensi = document.getElementById('filterTanggalAbsensi');
+            filterTanggalAbsensi.addEventListener('change', function() {
+                loadDataAbsensi(this.value);
+            });
+            
+            // Pencarian siswa
+            const cariSiswa = document.getElementById('cariSiswa');
+            cariSiswa.addEventListener('input', function() {
+                filterSiswa(this.value);
+            });
+            
+            // Filter chart
+            const chartFilter = document.getElementById('chartFilter');
+            chartFilter.addEventListener('change', function() {
+                updateChart(this.value);
+            });
+            
+            // Export laporan
+            const exportLaporanBtn = document.getElementById('exportLaporanBtn');
+            exportLaporanBtn.addEventListener('click', function() {
+                exportLaporan();
+            });
+            
+            // Export absensi
+            const exportAbsensiBtn = document.getElementById('exportAbsensiBtn');
+            exportAbsensiBtn.addEventListener('click', function() {
+                exportAbsensi();
+            });
+            
+            // Import siswa
+            const importSiswaBtn = document.getElementById('importSiswaBtn');
+            importSiswaBtn.addEventListener('click', function() {
+                importSiswa();
+            });
+        }
+
+        function setDefaultDates() {
+            // Set tanggal hari ini untuk filter absensi
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('filterTanggalAbsensi').value = today;
+            
+            // Set tanggal hari ini untuk form absensi
+            document.getElementById('tanggalAbsensi').value = today;
+        }
+
+        function setDefaultTanggalAbsensi() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('tanggalAbsensi').value = today;
+        }
+
+        function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const roleOption = document.querySelector('.role-option.active');
+            const role = roleOption.getAttribute('data-role');
+            const kelas = role === 'murid' ? document.getElementById('kelas').value : null;
+            
+            if (role === 'murid' && !kelas) {
+                showNotification('Harap pilih kelas', 'error');
+                return;
+            }
+            
+            const userList = users[role];
+            const user = userList.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                if (role === 'murid' && user.kelas !== kelas) {
+                    showNotification('Kelas tidak sesuai dengan akun', 'error');
+                    return;
+                }
+                
+                currentUser = user;
+                currentRole = role;
+                
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('currentRole', role);
+                
+                showDashboard(role);
+                showNotification(`Login berhasil sebagai ${role}`, 'success');
+            } else {
+                showNotification('Username atau password salah', 'error');
+            }
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            currentRole = null;
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('currentRole');
+            showLoginPage();
+            showNotification('Logout berhasil', 'success');
+        }
+
+        function showDashboard(role) {
+            document.getElementById('loginPage').style.display = 'none';
+            
+            if (role === 'guru') {
+                document.getElementById('guruDashboard').style.display = 'block';
+                document.getElementById('muridDashboard').style.display = 'none';
+                loadGuruDashboard();
+            } else {
+                document.getElementById('guruDashboard').style.display = 'none';
+                document.getElementById('muridDashboard').style.display = 'block';
+                loadMuridDashboard();
+            }
+        }
+
+        function showLoginPage() {
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('guruDashboard').style.display = 'none';
+            document.getElementById('muridDashboard').style.display = 'none';
+            document.getElementById('loginForm').reset();
+        }
+
+        function loadGuruDashboard() {
+            // Implementasi dashboard guru
+            document.getElementById('guruNama').textContent = currentUser.nama;
+            
+            // Load data dan inisialisasi komponen guru
+            loadDashboardGuru();
+            loadDataSiswa();
+            loadDataTugas();
+            loadDataNilai();
+            loadDataAbsensi();
+            loadDataJadwal();
+            loadDataMateriGuru();
+            loadDataPengumumanGuru();
+        }
+
+        function loadMuridDashboard() {
+            // Update info murid
+            document.getElementById('muridNama').textContent = currentUser.nama;
+            document.getElementById('muridKelas').textContent = currentUser.kelas;
+            document.getElementById('muridKelasInfo').textContent = `Kimia ${currentUser.kelas}`;
+            document.getElementById('muridWelcome').textContent = `Dashboard Murid - Kimia ${currentUser.kelas}`;
+            
+            // Load data khusus murid
+            loadMuridData();
+        }
+
+        function loadDashboardGuru() {
+            // Update card values
+            document.getElementById('totalSiswa').textContent = dataSiswa.length;
+            
+            const tugasAktif = dataTugas.filter(t => t.status === 'Aktif').length;
+            document.getElementById('tugasAktif').textContent = tugasAktif;
+            
+            // Hitung tugas yang perlu dinilai
+            const tugasPerluNilai = dataPengumpulan.filter(p => p.status === 'Dikumpulkan').length;
+            document.getElementById('tugasPerluNilai').textContent = tugasPerluNilai;
+            
+            document.getElementById('pengingat').textContent = 3; // Nilai statis untuk contoh
+            
+            // Load tugas mendatang
+            loadTugasMendatang();
+            
+            // Update chart
+            updateChart('rata-rata');
+        }
+
+        function loadTugasMendatang() {
+            const container = document.getElementById('tugasMendatangCards');
+            container.innerHTML = '';
+            
+            // Ambil tugas dengan batas waktu dalam 7 hari ke depan
+            const sekarang = new Date();
+            const tujuhHariLagi = new Date();
+            tujuhHariLagi.setDate(sekarang.getDate() + 7);
+            
+            const tugasMendatang = dataTugas.filter(tugas => {
+                const batasWaktu = new Date(tugas.batasWaktu);
+                return batasWaktu > sekarang && batasWaktu <= tujuhHariLagi && tugas.status === 'Aktif';
+            });
+            
+            if (tugasMendatang.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #777;">Tidak ada tugas mendatang</p>';
+                return;
+            }
+            
+            tugasMendatang.forEach(tugas => {
+                const card = createTugasCard(tugas);
+                container.appendChild(card);
+            });
+        }
+
+        function createTugasCard(tugas) {
+            const card = document.createElement('div');
+            card.className = `tugas-card ${tugas.tipe === 'kuis' ? 'kuis' : ''}`;
+            
+            const pengumpulanTugas = dataPengumpulan.filter(p => p.tugasId === tugas.id);
+            const siswaTugas = dataSiswa.filter(s => tugas.kelas === 'Semua Kelas' || s.kelas === tugas.kelas);
+            
+            const sudahDikumpulkan = pengumpulanTugas.length;
+            const totalSiswa = siswaTugas.length;
+            const persentase = totalSiswa > 0 ? Math.round((sudahDikumpulkan / totalSiswa) * 100) : 0;
+            
+            const hariHinggaBatas = Math.ceil((new Date(tugas.batasWaktu) - new Date()) / (1000 * 60 * 60 * 24));
+            
+            let statusText = `${hariHinggaBatas} hari lagi`;
+            let statusClass = 'aktif';
+            
+            if (hariHinggaBatas === 1) {
+                statusText = 'Besok';
+                statusClass = 'terlambat';
+            } else if (hariHinggaBatas === 0) {
+                statusText = 'Hari ini';
+                statusClass = 'terlambat';
+            } else if (hariHinggaBatas < 0) {
+                statusText = 'Terlambat';
+                statusClass = 'terlambat';
+            }
+            
+            card.innerHTML = `
+                <div class="tugas-card-header">
+                    <div>
+                        <div class="tugas-card-title">${tugas.judul}</div>
+                        <div class="tugas-card-meta">
+                            <span><i class="fas fa-book"></i> ${tugas.mapel}</span>
+                            <span><i class="fas fa-users"></i> ${tugas.kelas}</span>
+                            <span><i class="fas fa-calendar"></i> ${formatDate(tugas.batasWaktu)}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="tugas-card-badge ${tugas.tipe}">${tugas.tipe === 'kuis' ? 'Kuis' : 'Tugas'}</span>
+                        <span class="tugas-card-badge ${statusClass}">${statusText}</span>
+                    </div>
+                </div>
+                <div class="tugas-card-description">
+                    ${tugas.deskripsi}
+                </div>
+                <div class="tugas-card-footer">
+                    <div class="tugas-card-progress">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span>Pengumpulan: ${sudahDikumpulkan}/${totalSiswa}</span>
+                            <span>${persentase}%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: ${persentase}%"></div>
+                        </div>
+                    </div>
+                    <div class="tugas-card-actions">
+                        <button class="btn btn-primary btn-sm" onclick="lihatDetailTugas(${tugas.id})"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-warning btn-sm" onclick="editTugas(${tugas.id})"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="hapusTugas(${tugas.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function loadDataSiswa() {
+            const tbody = document.querySelector('#tabelSiswa tbody');
+            tbody.innerHTML = '';
+            
+            dataSiswa.forEach((siswa, index) => {
+                const row = document.createElement('tr');
+                
+                let statusClass = 'badge-success';
+                if (siswa.status === 'Izin') statusClass = 'badge-warning';
+                if (siswa.status === 'Alpa') statusClass = 'badge-danger';
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${siswa.nama}</td>
+                    <td>${siswa.nis}</td>
+                    <td>${siswa.email}</td>
+                    <td>${siswa.kelas}</td>
+                    <td><span class="badge ${statusClass}">${siswa.status}</span></td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="editSiswa(${siswa.id})"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="hapusSiswa(${siswa.id})"><i class="fas fa-trash"></i></button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function filterSiswa(keyword) {
+            const tbody = document.querySelector('#tabelSiswa tbody');
+            const rows = tbody.querySelectorAll('tr');
+            
+            rows.forEach(row => {
+                const nama = row.cells[1].textContent.toLowerCase();
+                const nis = row.cells[2].textContent.toLowerCase();
+                const email = row.cells[3].textContent.toLowerCase();
+                const kelas = row.cells[4].textContent.toLowerCase();
+                
+                if (nama.includes(keyword.toLowerCase()) || 
+                    nis.includes(keyword.toLowerCase()) || 
+                    email.includes(keyword.toLowerCase()) ||
+                    kelas.includes(keyword.toLowerCase())) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function loadDataTugas() {
+            // Tugas Aktif
+            const tugasAktif = dataTugas.filter(t => t.status === 'Aktif' && t.tipe === 'tugas');
+            const containerAktif = document.getElementById('tugasAktifCards');
+            containerAktif.innerHTML = '';
+            
+            // Update stats tugas aktif
+            document.getElementById('totalTugasAktif').textContent = tugasAktif.length;
+            
+            let totalPengumpulanAktif = 0;
+            let totalSiswaAktif = 0;
+            
+            if (tugasAktif.length === 0) {
+                containerAktif.innerHTML = '<p style="text-align: center; color: #777;">Tidak ada tugas aktif</p>';
+            } else {
+                tugasAktif.forEach(tugas => {
+                    const pengumpulanTugas = dataPengumpulan.filter(p => p.tugasId === tugas.id);
+                    const siswaTugas = dataSiswa.filter(s => tugas.kelas === 'Semua Kelas' || s.kelas === tugas.kelas);
+                    
+                    const sudahDikumpulkan = pengumpulanTugas.length;
+                    const totalSiswa = siswaTugas.length;
+                    
+                    totalPengumpulanAktif += sudahDikumpulkan;
+                    totalSiswaAktif += totalSiswa;
+                    
+                    const card = createTugasCard(tugas);
+                    containerAktif.appendChild(card);
+                });
+            }
+            
+            // Update stats pengumpulan aktif
+            document.getElementById('totalPengumpulanAktif').textContent = totalPengumpulanAktif;
+            const rataAktif = totalSiswaAktif > 0 ? Math.round((totalPengumpulanAktif / totalSiswaAktif) * 100) : 0;
+            document.getElementById('rataPengumpulanAktif').textContent = `${rataAktif}%`;
+            
+            // Tugas Selesai
+            const tugasSelesai = dataTugas.filter(t => t.status === 'Selesai' && t.tipe === 'tugas');
+            const containerSelesai = document.getElementById('tugasSelesaiCards');
+            containerSelesai.innerHTML = '';
+            
+            // Update stats tugas selesai
+            document.getElementById('totalTugasSelesai').textContent = tugasSelesai.length;
+            
+            let totalPengumpulanSelesai = 0;
+            let totalSiswaSelesai = 0;
+            
+            if (tugasSelesai.length === 0) {
+                containerSelesai.innerHTML = '<p style="text-align: center; color: #777;">Tidak ada tugas selesai</p>';
+            } else {
+                tugasSelesai.forEach(tugas => {
+                    const pengumpulanTugas = dataPengumpulan.filter(p => p.tugasId === tugas.id);
+                    const siswaTugas = dataSiswa.filter(s => tugas.kelas === 'Semua Kelas' || s.kelas === tugas.kelas);
+                    
+                    const sudahDikumpulkan = pengumpulanTugas.length;
+                    const totalSiswa = siswaTugas.length;
+                    
+                    totalPengumpulanSelesai += sudahDikumpulkan;
+                    totalSiswaSelesai += totalSiswa;
+                    
+                    const card = createTugasCard(tugas);
+                    containerSelesai.appendChild(card);
+                });
+            }
+            
+            // Update stats pengumpulan selesai
+            document.getElementById('totalPengumpulanSelesai').textContent = totalPengumpulanSelesai;
+            const rataSelesai = totalSiswaSelesai > 0 ? Math.round((totalPengumpulanSelesai / totalSiswaSelesai) * 100) : 0;
+            document.getElementById('rataPengumpulanSelesai').textContent = `${rataSelesai}%`;
+            
+            // Kuis
+            const kuis = dataTugas.filter(t => t.tipe === 'kuis');
+            const containerKuis = document.getElementById('kuisCards');
+            containerKuis.innerHTML = '';
+            
+            // Update stats kuis
+            document.getElementById('totalKuis').textContent = kuis.length;
+            
+            let totalPengumpulanKuis = 0;
+            let totalSiswaKuis = 0;
+            
+            if (kuis.length === 0) {
+                containerKuis.innerHTML = '<p style="text-align: center; color: #777;">Tidak ada kuis</p>';
+            } else {
+                kuis.forEach(tugas => {
+                    const pengumpulanTugas = dataPengumpulan.filter(p => p.tugasId === tugas.id);
+                    const siswaTugas = dataSiswa.filter(s => tugas.kelas === 'Semua Kelas' || s.kelas === tugas.kelas);
+                    
+                    const sudahDikumpulkan = pengumpulanTugas.length;
+                    const totalSiswa = siswaTugas.length;
+                    
+                    totalPengumpulanKuis += sudahDikumpulkan;
+                    totalSiswaKuis += totalSiswa;
+                    
+                    const card = createTugasCard(tugas);
+                    containerKuis.appendChild(card);
+                });
+            }
+            
+            // Update stats pengumpulan kuis
+            document.getElementById('totalPengumpulanKuis').textContent = totalPengumpulanKuis;
+            const rataKuis = totalSiswaKuis > 0 ? Math.round((totalPengumpulanKuis / totalSiswaKuis) * 100) : 0;
+            document.getElementById('rataPengumpulanKuis').textContent = `${rataKuis}%`;
+            
+            // Arsip
+            const arsip = dataTugas.filter(t => t.status === 'Arsip');
+            const containerArsip = document.getElementById('arsipCards');
+            containerArsip.innerHTML = '';
+            
+            if (arsip.length === 0) {
+                containerArsip.innerHTML = '<p style="text-align: center; color: #777;">Tidak ada tugas di arsip</p>';
+            } else {
+                arsip.forEach(tugas => {
+                    const card = createTugasCard(tugas);
+                    containerArsip.appendChild(card);
+                });
+            }
+            
+            // Semua
+            const semua = dataTugas;
+            const containerSemua = document.getElementById('semuaCards');
+            containerSemua.innerHTML = '';
+            
+            if (semua.length === 0) {
+                containerSemua.innerHTML = '<p style="text-align: center; color: #777;">Tidak ada tugas</p>';
+            } else {
+                semua.forEach(tugas => {
+                    const card = createTugasCard(tugas);
+                    containerSemua.appendChild(card);
+                });
+            }
+        }
+
+        function lihatDetailTugas(tugasId) {
+            const tugas = dataTugas.find(t => t.id === tugasId);
+            if (!tugas) return;
+            
+            // Isi detail tugas
+            document.getElementById('detailTugasTitle').textContent = `Detail ${tugas.tipe === 'kuis' ? 'Kuis' : 'Tugas'}`;
+            document.getElementById('detailJudul').textContent = tugas.judul;
+            document.getElementById('detailMapel').textContent = tugas.mapel;
+            document.getElementById('detailKelas').textContent = tugas.kelas;
+            document.getElementById('detailDeskripsi').textContent = tugas.deskripsi;
+            document.getElementById('detailBatasWaktu').textContent = formatDateTime(tugas.batasWaktu);
+            document.getElementById('detailStatus').textContent = tugas.status;
+            
+            // Hitung statistik pengumpulan
+            const pengumpulanTugas = dataPengumpulan.filter(p => p.tugasId === tugasId);
+            const siswaTugas = dataSiswa.filter(s => tugas.kelas === 'Semua Kelas' || s.kelas === tugas.kelas);
+            
+            document.getElementById('pengumpulanCount').textContent = pengumpulanTugas.length;
+            document.getElementById('totalSiswaCount').textContent = siswaTugas.length;
+            
+            // Tampilkan daftar pengumpulan
+            const container = document.getElementById('daftarPengumpulan');
+            container.innerHTML = '';
+            
+            if (pengumpulanTugas.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #777;">Belum ada pengumpulan</p>';
+            } else {
+                pengumpulanTugas.forEach(pengumpulan => {
+                    const item = document.createElement('div');
+                    item.className = 'pengumpulan-item';
+                    
+                    let statusBadge = '';
+                    if (pengumpulan.status === 'Dinilai') {
+                        statusBadge = `<span class="badge badge-success">Dinilai (${pengumpulan.nilai})</span>`;
+                    } else if (pengumpulan.status === 'Dikumpulkan') {
+                        statusBadge = `<span class="badge badge-warning">Menunggu Dinilai</span>`;
+                    } else {
+                        statusBadge = `<span class="badge badge-secondary">${pengumpulan.status}</span>`;
+                    }
+                    
+                    item.innerHTML = `
+                        <div class="pengumpulan-info">
+                            <h4>${pengumpulan.nama}</h4>
+                            <p>Dikumpulkan: ${formatDateTime(pengumpulan.tanggalKirim)}</p>
+                            <p>File: ${pengumpulan.file}</p>
+                            ${pengumpulan.catatan ? `<p>Catatan: ${pengumpulan.catatan}</p>` : ''}
+                        </div>
+                        <div class="pengumpulan-actions">
+                            ${statusBadge}
+                            <button class="btn btn-primary btn-sm" onclick="unduhFile(${pengumpulan.id})"><i class="fas fa-download"></i></button>
+                            ${pengumpulan.status !== 'Dinilai' ? 
+                                `<button class="btn btn-success btn-sm" onclick="beriNilai(${pengumpulan.id}, ${tugasId})"><i class="fas fa-check"></i> Nilai</button>` : 
+                                `<button class="btn btn-warning btn-sm" onclick="beriNilai(${pengumpulan.id}, ${tugasId})"><i class="fas fa-edit"></i> Edit Nilai</button>`
+                            }
+                        </div>
+                    `;
+                    container.appendChild(item);
+                });
+            }
+            
+            // Tampilkan modal
+            document.getElementById('detailTugasModal').style.display = 'flex';
+        }
+
+        function beriNilai(pengumpulanId, tugasId) {
+            const pengumpulan = dataPengumpulan.find(p => p.id === pengumpulanId);
+            const tugas = dataTugas.find(t => t.id === tugasId);
+            
+            if (!pengumpulan || !tugas) return;
+            
+            currentTugasId = tugasId;
+            
+            // Isi form nilai
+            document.getElementById('siswaNilaiNama').textContent = `${pengumpulan.nama} (${pengumpulan.kelas})`;
+            document.getElementById('tugasNilaiJudul').textContent = tugas.judul;
+            document.getElementById('nilaiTugas').value = pengumpulan.nilai || '';
+            document.getElementById('catatanTugas').value = pengumpulan.catatan || '';
+            
+            // Tampilkan modal
+            document.getElementById('nilaiTugasModal').style.display = 'flex';
+        }
+
+        function simpanNilaiTugas() {
+            const nilai = parseInt(document.getElementById('nilaiTugas').value);
+            const catatan = document.getElementById('catatanTugas').value;
+            
+            if (nilai < 0 || nilai > 100) {
+                showNotification('Nilai harus antara 0-100', 'error');
+                return;
+            }
+            
+            const index = dataPengumpulan.findIndex(p => p.id === currentTugasId);
+            if (index !== -1) {
+                dataPengumpulan[index] = {
+                    ...dataPengumpulan[index],
+                    nilai: nilai,
+                    catatan: catatan,
+                    status: 'Dinilai'
+                };
+                
+                document.getElementById('nilaiTugasModal').style.display = 'none';
+                
+                // Refresh detail tugas jika sedang dibuka
+                if (currentTugasId) {
+                    lihatDetailTugas(currentTugasId);
+                }
+                
+                showNotification('Nilai berhasil disimpan', 'success');
+            }
+        }
+
+        function loadDataNilai(kelas = 'all') {
+            const tbody = document.getElementById('tabelNilai');
+            tbody.innerHTML = '';
+            
+            let dataToShow = dataNilai;
+            if (kelas !== 'all') {
+                dataToShow = dataNilai.filter(n => n.kelas === kelas);
+            }
+            
+            if (dataToShow.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="9" style="text-align: center;">Tidak ada data nilai</td>`;
+                tbody.appendChild(row);
+                return;
+            }
+            
+            dataToShow.forEach(nilai => {
+                const rataRata = Math.round(
+                    (nilai.tugas1 + nilai.tugas2 + nilai.kuis1 + nilai.uts + nilai.uas) / 5
+                );
+                
+                let rataRataClass = 'badge-success';
+                if (rataRata < 75) rataRataClass = 'badge-warning';
+                if (rataRata < 65) rataRataClass = 'badge-danger';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${nilai.nama}</td>
+                    <td>${nilai.kelas}</td>
+                    <td>${nilai.tugas1}</td>
+                    <td>${nilai.tugas2}</td>
+                    <td>${nilai.kuis1}</td>
+                    <td>${nilai.uts}</td>
+                    <td>${nilai.uas}</td>
+                    <td><span class="badge ${rataRataClass}">${rataRata}</span></td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="editNilai(${nilai.id})"><i class="fas fa-edit"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function loadDataAbsensi(tanggal = null) {
+            const tbody = document.getElementById('tabelAbsensi');
+            tbody.innerHTML = '';
+            
+            let dataToShow = dataAbsensi;
+            if (tanggal) {
+                dataToShow = dataAbsensi.filter(a => a.tanggal === tanggal);
+            }
+            
+            // Update status counts
+            updateAbsensiCounts(dataToShow);
+            
+            if (dataToShow.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="6" style="text-align: center;">Tidak ada data absensi</td>`;
+                tbody.appendChild(row);
+                return;
+            }
+            
+            dataToShow.forEach(absensi => {
+                let statusClass = 'badge-success';
+                if (absensi.status === 'Izin') statusClass = 'badge-warning';
+                if (absensi.status === 'Sakit') statusClass = 'badge-primary';
+                if (absensi.status === 'Alpa') statusClass = 'badge-danger';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${absensi.nama}</td>
+                    <td>${absensi.kelas}</td>
+                    <td>${formatDate(absensi.tanggal)}</td>
+                    <td><span class="badge ${statusClass}">${absensi.status}</span></td>
+                    <td>${absensi.keterangan}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="editAbsensi(${absensi.id})"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="hapusAbsensi(${absensi.id})"><i class="fas fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateAbsensiCounts(data) {
+            const hadirCount = data.filter(a => a.status === 'Hadir').length;
+            const izinCount = data.filter(a => a.status === 'Izin').length;
+            const sakitCount = data.filter(a => a.status === 'Sakit').length;
+            const alpaCount = data.filter(a => a.status === 'Alpa').length;
+            
+            document.getElementById('hadirCount').textContent = hadirCount;
+            document.getElementById('izinCount').textContent = izinCount;
+            document.getElementById('sakitCount').textContent = sakitCount;
+            document.getElementById('alpaCount').textContent = alpaCount;
+        }
+
+        function loadDataJadwal() {
+            const tbody = document.getElementById('tabelJadwal');
+            tbody.innerHTML = '';
+            
+            if (dataJadwal.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="6" style="text-align: center;">Tidak ada jadwal</td>`;
+                tbody.appendChild(row);
+                return;
+            }
+            
+            dataJadwal.forEach(jadwal => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${jadwal.hari}</td>
+                    <td>${jadwal.waktuMulai} - ${jadwal.waktuSelesai}</td>
+                    <td>${jadwal.kelas}</td>
+                    <td>${jadwal.mapel}</td>
+                    <td>${jadwal.ruangan}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="hapusJadwal(${jadwal.id})"><i class="fas fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function loadDataMateriGuru() {
+            const container = document.getElementById('daftarMateri');
+            container.innerHTML = '';
+            
+            if (dataMateri.length === 0) {
+                container.innerHTML = '<p style="text-align: center; width: 100%;">Tidak ada materi pembelajaran</p>';
+                return;
+            }
+            
+            dataMateri.forEach(materi => {
+                let icon = 'fa-file-pdf';
+                if (materi.tipe === 'Video') icon = 'fa-video';
+                if (materi.tipe === 'Presentasi') icon = 'fa-file-powerpoint';
+                if (materi.tipe === 'Teks') icon = 'fa-file-alt';
+                
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div>
+                            <h3>${materi.judul}</h3>
+                            <p>${materi.deskripsi}</p>
+                        </div>
+                        <div class="card-icon bg-primary">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center;">
+                        <span class="badge badge-success">${materi.kelas}</span>
+                        <span class="badge badge-primary">${materi.tipe}</span>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 0.8rem; color: #777;">
+                        Diupload: ${formatDate(materi.tglUpload)}
+                    </div>
+                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <button class="btn btn-primary btn-sm"><i class="fas fa-download"></i> Unduh</button>
+                        <button class="btn btn-danger btn-sm" onclick="hapusMateri(${materi.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function loadDataPengumumanGuru() {
+            const container = document.getElementById('daftarPengumuman');
+            container.innerHTML = '';
+            
+            if (dataPengumuman.length === 0) {
+                container.innerHTML = '<p style="text-align: center; width: 100%;">Tidak ada pengumuman</p>';
+                return;
+            }
+            
+            dataPengumuman.forEach(pengumuman => {
+                let prioritasClass = 'badge-primary';
+                if (pengumuman.prioritas === 'penting') prioritasClass = 'badge-warning';
+                if (pengumuman.prioritas === 'sangat-penting') prioritasClass = 'badge-danger';
+                
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div>
+                            <h3>${pengumuman.judul}</h3>
+                            <p>${pengumuman.isi}</p>
+                        </div>
+                        <div class="card-icon bg-warning">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center;">
+                        <span class="badge badge-success">${pengumuman.kelas}</span>
+                        <span class="badge ${prioritasClass}">${pengumuman.prioritas}</span>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 0.8rem; color: #777;">
+                        Diposting: ${formatDate(pengumuman.tanggal)}
+                    </div>
+                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="hapusPengumuman(${pengumuman.id})"><i class="fas fa-trash"></i> Hapus</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function loadSiswaUntukNilai() {
+            const select = document.getElementById('siswaNilai');
+            select.innerHTML = '<option value="">Pilih Siswa</option>';
+            
+            dataSiswa.forEach(siswa => {
+                const option = document.createElement('option');
+                option.value = siswa.id;
+                option.textContent = `${siswa.nama} (${siswa.kelas})`;
+                select.appendChild(option);
+            });
+        }
+
+        function loadSiswaUntukAbsensi() {
+            const container = document.getElementById('daftarSiswaAbsensi');
+            container.innerHTML = '';
+            
+            const kelas = document.getElementById('kelasAbsensi').value;
+            const siswaKelas = dataSiswa.filter(s => s.kelas === kelas);
+            
+            if (siswaKelas.length === 0) {
+                container.innerHTML = '<p>Tidak ada siswa di kelas ini</p>';
+                return;
+            }
+            
+            siswaKelas.forEach(siswa => {
+                const div = document.createElement('div');
+                div.className = 'form-group';
+                div.innerHTML = `
+                    <label>${siswa.nama} (NIS: ${siswa.nis})</label>
+                    <div style="display: flex; gap: 10px;">
+                        <label style="display: flex; align-items: center;">
+                            <input type="radio" name="status_${siswa.id}" value="Hadir" checked> Hadir
+                        </label>
+                        <label style="display: flex; align-items: center;">
+                            <input type="radio" name="status_${siswa.id}" value="Izin"> Izin
+                        </label>
+                        <label style="display: flex; align-items: center;">
+                            <input type="radio" name="status_${siswa.id}" value="Sakit"> Sakit
+                        </label>
+                        <label style="display: flex; align-items: center;">
+                            <input type="radio" name="status_${siswa.id}" value="Alpa"> Alpa
+                        </label>
+                        <input type="text" id="keterangan_${siswa.id}" placeholder="Keterangan (opsional)" class="form-control" style="flex: 1;">
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function tambahSiswa() {
+            const nama = document.getElementById('namaSiswa').value;
+            const nis = document.getElementById('nisSiswa').value;
+            const email = document.getElementById('emailSiswa').value;
+            const kelas = document.getElementById('kelasSiswa').value;
+            
+            // Cek apakah NIS sudah ada
+            if (dataSiswa.some(s => s.nis === nis)) {
+                showNotification('NIS sudah terdaftar', 'error');
+                return;
+            }
+            
+            const newId = dataSiswa.length > 0 ? Math.max(...dataSiswa.map(s => s.id)) + 1 : 1;
+            
+            dataSiswa.push({
+                id: newId,
+                nama: nama,
+                nis: nis,
+                email: email,
+                kelas: kelas,
+                status: 'Aktif'
+            });
+            
+            // Tambah data nilai default untuk siswa baru
+            dataNilai.push({
+                id: newId,
+                nama: nama,
+                kelas: kelas,
+                tugas1: 0,
+                tugas2: 0,
+                kuis1: 0,
+                uts: 0,
+                uas: 0
+            });
+            
+            document.getElementById('tambahSiswaModal').style.display = 'none';
+            loadDataSiswa();
+            loadDashboardGuru();
+            showNotification('Siswa berhasil ditambahkan', 'success');
+        }
+
+        function tambahTugas() {
+            const judul = document.getElementById('judulTugas').value;
+            const mapel = document.getElementById('mataPelajaran').value;
+            const kelas = document.getElementById('kelasTugas').value;
+            const deskripsi = document.getElementById('deskripsiTugas').value;
+            const batasWaktu = document.getElementById('batasWaktu').value;
+            
+            const newId = dataTugas.length > 0 ? Math.max(...dataTugas.map(t => t.id)) + 1 : 1;
+            
+            // Tentukan tipe berdasarkan judul modal
+            const modalTitle = document.getElementById('modalTugasTitle').textContent;
+            const tipe = modalTitle.includes('Kuis') ? 'kuis' : 'tugas';
+            
+            dataTugas.push({
+                id: newId,
+                judul: judul,
+                mapel: mapel,
+                kelas: kelas,
+                tglDibuat: new Date().toISOString().split('T')[0],
+                batasWaktu: batasWaktu.split('T')[0],
+                status: 'Aktif',
+                tipe: tipe,
+                deskripsi: deskripsi,
+                lampiran: '' // Untuk simulasi, lampiran tidak disimpan
+            });
+            
+            document.getElementById('buatTugasModal').style.display = 'none';
+            loadDataTugas();
+            loadDashboardGuru();
+            showNotification(`${tipe === 'kuis' ? 'Kuis' : 'Tugas'} berhasil dibuat`, 'success');
+        }
+
+        function tambahJadwal() {
+            const hari = document.getElementById('hariJadwal').value;
+            const waktuMulai = document.getElementById('waktuMulai').value;
+            const waktuSelesai = document.getElementById('waktuSelesai').value;
+            const kelas = document.getElementById('kelasJadwal').value;
+            const ruangan = document.getElementById('ruanganJadwal').value;
+            
+            const newId = dataJadwal.length > 0 ? Math.max(...dataJadwal.map(j => j.id)) + 1 : 1;
+            
+            dataJadwal.push({
+                id: newId,
+                hari: hari,
+                waktuMulai: waktuMulai,
+                waktuSelesai: waktuSelesai,
+                kelas: kelas,
+                mapel: 'Kimia',
+                ruangan: ruangan
+            });
+            
+            document.getElementById('tambahJadwalModal').style.display = 'none';
+            loadDataJadwal();
+            showNotification('Jadwal berhasil ditambahkan', 'success');
+        }
+
+        function tambahMateri() {
+            const judul = document.getElementById('judulMateri').value;
+            const deskripsi = document.getElementById('deskripsiMateri').value;
+            const kelas = document.getElementById('kelasMateri').value;
+            const tipe = document.getElementById('tipeMateri').value;
+            
+            const newId = dataMateri.length > 0 ? Math.max(...dataMateri.map(m => m.id)) + 1 : 1;
+            
+            dataMateri.push({
+                id: newId,
+                judul: judul,
+                deskripsi: deskripsi,
+                kelas: kelas,
+                tipe: tipe,
+                tglUpload: new Date().toISOString().split('T')[0]
+            });
+            
+            document.getElementById('tambahMateriModal').style.display = 'none';
+            loadDataMateriGuru();
+            showNotification('Materi berhasil ditambahkan', 'success');
+        }
+
+        function tambahPengumuman() {
+            const judul = document.getElementById('judulPengumuman').value;
+            const isi = document.getElementById('isiPengumuman').value;
+            const kelas = document.getElementById('kelasPengumuman').value;
+            const prioritas = document.getElementById('prioritasPengumuman').value;
+            
+            const newId = dataPengumuman.length > 0 ? Math.max(...dataPengumuman.map(p => p.id)) + 1 : 1;
+            
+            dataPengumuman.push({
+                id: newId,
+                judul: judul,
+                isi: isi,
+                kelas: kelas,
+                prioritas: prioritas,
+                tanggal: new Date().toISOString().split('T')[0]
+            });
+            
+            document.getElementById('tambahPengumumanModal').style.display = 'none';
+            loadDataPengumumanGuru();
+            showNotification('Pengumuman berhasil dibuat', 'success');
+        }
+
+        function simpanNilai() {
+            const siswaId = parseInt(document.getElementById('siswaNilai').value);
+            const jenisNilai = document.getElementById('jenisNilai').value;
+            const nilai = parseInt(document.getElementById('nilai').value);
+            
+            const index = dataNilai.findIndex(n => n.id === siswaId);
+            if (index !== -1) {
+                dataNilai[index][jenisNilai] = nilai;
+                
+                document.getElementById('inputNilaiModal').style.display = 'none';
+                loadDataNilai(document.getElementById('filterKelas').value);
+                showNotification('Nilai berhasil disimpan', 'success');
+            }
+        }
+
+        function simpanAbsensi() {
+            const kelas = document.getElementById('kelasAbsensi').value;
+            const tanggal = document.getElementById('tanggalAbsensi').value;
+            
+            // Hapus absensi lama untuk kelas dan tanggal yang sama
+            dataAbsensi = dataAbsensi.filter(a => !(a.kelas === kelas && a.tanggal === tanggal));
+            
+            // Ambil siswa di kelas tersebut
+            const siswaKelas = dataSiswa.filter(s => s.kelas === kelas);
+            
+            // Simpan absensi baru
+            siswaKelas.forEach(siswa => {
+                const statusElement = document.querySelector(`input[name="status_${siswa.id}"]:checked`);
+                const keteranganElement = document.getElementById(`keterangan_${siswa.id}`);
+                
+                if (statusElement) {
+                    const newId = dataAbsensi.length > 0 ? Math.max(...dataAbsensi.map(a => a.id)) + 1 : 1;
+                    
+                    dataAbsensi.push({
+                        id: newId,
+                        siswaId: siswa.id,
+                        nama: siswa.nama,
+                        kelas: siswa.kelas,
+                        tanggal: tanggal,
+                        status: statusElement.value,
+                        keterangan: keteranganElement ? keteranganElement.value : ''
+                    });
+                }
+            });
+            
+            document.getElementById('ambilAbsensiModal').style.display = 'none';
+            loadDataAbsensi(tanggal);
+            showNotification('Absensi berhasil disimpan', 'success');
+        }
+
+        function editSiswa(id) {
+            const siswa = dataSiswa.find(s => s.id === id);
+            if (siswa) {
+                document.getElementById('modalSiswaTitle').textContent = 'Edit Data Siswa';
+                document.getElementById('namaSiswa').value = siswa.nama;
+                document.getElementById('nisSiswa').value = siswa.nis;
+                document.getElementById('emailSiswa').value = siswa.email;
+                document.getElementById('kelasSiswa').value = siswa.kelas;
+                
+                document.getElementById('tambahSiswaModal').style.display = 'flex';
+            }
+        }
+
+        function editTugas(id) {
+            const tugas = dataTugas.find(t => t.id === id);
+            if (tugas) {
+                document.getElementById('modalTugasTitle').textContent = 'Edit Tugas';
+                document.getElementById('judulTugas').value = tugas.judul;
+                document.getElementById('mataPelajaran').value = tugas.mapel;
+                document.getElementById('kelasTugas').value = tugas.kelas;
+                document.getElementById('deskripsiTugas').value = tugas.deskripsi || '';
+                
+                // Format batas waktu untuk input datetime-local
+                const batasWaktu = new Date(tugas.batasWaktu);
+                const formattedDate = batasWaktu.toISOString().slice(0, 16);
+                document.getElementById('batasWaktu').value = formattedDate;
+                
+                document.getElementById('buatTugasModal').style.display = 'flex';
+            }
+        }
+
+        function editNilai(id) {
+            // Untuk contoh, kita langsung buka modal input nilai
+            // dan set nilai siswa yang dipilih
+            document.getElementById('inputNilaiModal').style.display = 'flex';
+            loadSiswaUntukNilai();
+            document.getElementById('siswaNilai').value = id;
+        }
+
+        function editAbsensi(id) {
+            const absensi = dataAbsensi.find(a => a.id === id);
+            if (absensi) {
+                // Untuk contoh, kita hapus absensi lama dan buka modal ambil absensi baru
+                dataAbsensi = dataAbsensi.filter(a => a.id !== id);
+                
+                document.getElementById('ambilAbsensiModal').style.display = 'flex';
+                document.getElementById('kelasAbsensi').value = absensi.kelas;
+                document.getElementById('tanggalAbsensi').value = absensi.tanggal;
+                loadSiswaUntukAbsensi();
+                
+                // Set status untuk siswa ini
+                setTimeout(() => {
+                    const radio = document.querySelector(`input[name="status_${absensi.siswaId}"][value="${absensi.status}"]`);
+                    if (radio) radio.checked = true;
+                    
+                    const keterangan = document.getElementById(`keterangan_${absensi.siswaId}`);
+                    if (keterangan) keterangan.value = absensi.keterangan;
+                }, 100);
+            }
+        }
+
+        function hapusSiswa(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus siswa ini?')) {
+                dataSiswa = dataSiswa.filter(s => s.id !== id);
+                dataNilai = dataNilai.filter(n => n.id !== id);
+                // Juga hapus data pengumpulan yang terkait
+                dataPengumpulan = dataPengumpulan.filter(p => p.siswaId !== id);
+                loadDataSiswa();
+                loadDataNilai(document.getElementById('filterKelas').value);
+                loadDashboardGuru();
+                showNotification('Siswa berhasil dihapus', 'success');
+            }
+        }
+
+        function hapusTugas(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus tugas ini?')) {
+                // Hapus juga data pengumpulan terkait
+                dataPengumpulan = dataPengumpulan.filter(p => p.tugasId !== id);
+                dataTugas = dataTugas.filter(t => t.id !== id);
+                loadDataTugas();
+                loadDashboardGuru();
+                showNotification('Tugas berhasil dihapus', 'success');
+            }
+        }
+
+        function pulihkanTugas(id) {
+            const index = dataTugas.findIndex(t => t.id === id);
+            if (index !== -1) {
+                dataTugas[index].status = 'Aktif';
+                loadDataTugas();
+                showNotification('Tugas berhasil dipulihkan', 'success');
+            }
+        }
+
+        function hapusJadwal(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus jadwal ini?')) {
+                dataJadwal = dataJadwal.filter(j => j.id !== id);
+                loadDataJadwal();
+                showNotification('Jadwal berhasil dihapus', 'success');
+            }
+        }
+
+        function hapusMateri(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus materi ini?')) {
+                dataMateri = dataMateri.filter(m => m.id !== id);
+                loadDataMateriGuru();
+                showNotification('Materi berhasil dihapus', 'success');
+            }
+        }
+
+        function hapusPengumuman(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus pengumuman ini?')) {
+                dataPengumuman = dataPengumuman.filter(p => p.id !== id);
+                loadDataPengumumanGuru();
+                showNotification('Pengumuman berhasil dihapus', 'success');
+            }
+        }
+
+        function hapusAbsensi(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus data absensi ini?')) {
+                dataAbsensi = dataAbsensi.filter(a => a.id !== id);
+                loadDataAbsensi(document.getElementById('filterTanggalAbsensi').value);
+                showNotification('Absensi berhasil dihapus', 'success');
+            }
+        }
+
+        function unduhFile(pengumpulanId) {
+            const pengumpulan = dataPengumpulan.find(p => p.id === pengumpulanId);
+            if (pengumpulan) {
+                showNotification(`Mengunduh file: ${pengumpulan.file}`, 'success');
+                // Di implementasi nyata, ini akan mengunduh file dari server
+            }
+        }
+
+        function updateChart(tipe) {
+            const container = document.getElementById('grafikPrestasi');
+            
+            // Untuk contoh, kita buat chart sederhana dengan HTML
+            let chartHTML = '';
+            
+            if (tipe === 'rata-rata') {
+                const rataRataKelas = dataNilai.map(n => {
+                    const rataRata = Math.round((n.tugas1 + n.tugas2 + n.kuis1 + n.uts + n.uas) / 5);
+                    return { nama: n.nama, nilai: rataRata };
+                });
+                
+                chartHTML = '<h3>Rata-rata Nilai Siswa</h3>';
+                rataRataKelas.forEach(siswa => {
+                    const persentase = (siswa.nilai / 100) * 100;
+                    chartHTML += `
+                        <div style="margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>${siswa.nama}</span>
+                                <span>${siswa.nilai}</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: ${persentase}%"></div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else if (tipe === 'per-kelas') {
+                const kelas = ['X IPA 1', 'X IPA 2', 'X IPA 3'];
+                chartHTML = '<h3>Rata-rata Nilai per Kelas</h3>';
+                
+                kelas.forEach(k => {
+                    const siswaKelas = dataNilai.filter(n => n.kelas === k);
+                    if (siswaKelas.length > 0) {
+                        const total = siswaKelas.reduce((sum, n) => {
+                            return sum + (n.tugas1 + n.tugas2 + n.kuis1 + n.uts + n.uas) / 5;
+                        }, 0);
+                        const rataRata = Math.round(total / siswaKelas.length);
+                        const persentase = (rataRata / 100) * 100;
+                        
+                        chartHTML += `
+                            <div style="margin-bottom: 10px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span>${k}</span>
+                                    <span>${rataRata}</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: ${persentase}%"></div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+            }
+            
+            container.innerHTML = chartHTML;
+        }
+
+        function exportLaporan() {
+            showNotification('Fitur export laporan akan segera tersedia', 'success');
+            // Di sini bisa ditambahkan logika untuk export PDF/Excel
+        }
+
+        function exportAbsensi() {
+            showNotification('Fitur export absensi akan segera tersedia', 'success');
+            // Di sini bisa ditambahkan logika untuk export PDF/Excel
+        }
+
+        function importSiswa() {
+            showNotification('Fitur import siswa akan segera tersedia', 'success');
+            // Di sini bisa ditambahkan logika untuk import dari Excel/CSV
+        }
+
+        // Fungsi untuk dashboard murid
+        function loadMuridData() {
+            const kelasMurid = currentUser.kelas;
+            
+            // Filter data berdasarkan kelas murid
+            const tugasUntukMurid = dataTugas.filter(t => 
+                t.kelas === "Semua Kelas" || t.kelas === kelasMurid
+            );
+            
+            const pengumpulanMurid = dataPengumpulan.filter(p => 
+                p.nama === currentUser.nama
+            );
+            
+            const nilaiMurid = dataNilai.find(n => n.nama === currentUser.nama);
+            const materiUntukMurid = dataMateri.filter(m => 
+                m.kelas === "Semua Kelas" || m.kelas === kelasMurid
+            );
+            const pengumumanUntukMurid = dataPengumuman.filter(p => 
+                p.kelas === "Semua Kelas" || p.kelas === kelasMurid
+            );
+            
+            // Update dashboard stats
+            updateMuridStats(tugasUntukMurid, pengumpulanMurid, nilaiMurid);
+            
+            // Load tugas terbaru
+            loadTugasTerbaru(tugasUntukMurid, pengumpulanMurid);
+            
+            // Load tabel tugas
+            loadTugasMuridTable(tugasUntukMurid, pengumpulanMurid);
+            
+            // Load nilai
+            loadNilaiMurid(nilaiMurid);
+            
+            // Load materi
+            loadMateriMurid(materiUntukMurid);
+            
+            // Load pengumuman
+            loadPengumumanMurid(pengumumanUntukMurid);
+        }
+
+        function updateMuridStats(tugas, pengumpulan, nilai) {
+            const sekarang = new Date();
+            
+            const tugasAktif = tugas.filter(t => {
+                const batasWaktu = new Date(tugas.batasWaktu);
+                return batasWaktu > sekarang && t.status === "Aktif";
+            }).length;
+            
+            const tugasSelesai = pengumpulan.filter(p => p.status === "Dinilai").length;
+            
+            const tugasTerlambat = pengumpulan.filter(p => {
+                const tugas = dataTugas.find(t => t.id === p.tugasId);
+                if (!tugas) return false;
+                const batasWaktu = new Date(tugas.batasWaktu);
+                const waktuKirim = new Date(p.tanggalKirim);
+                return waktuKirim > batasWaktu;
+            }).length;
+            
+            const rataNilai = nilai ? Math.round(
+                (nilai.tugas1 + nilai.tugas2 + nilai.kuis1 + nilai.uts + nilai.uas) / 5
+            ) : 0;
+            
+            document.getElementById('tugasAktifMurid').textContent = tugasAktif;
+            document.getElementById('tugasSelesaiMurid').textContent = tugasSelesai;
+            document.getElementById('tugasTerlambatMurid').textContent = tugasTerlambat;
+            document.getElementById('rataNilaiMurid').textContent = rataNilai;
+        }
+
+        function loadTugasTerbaru(tugas, pengumpulan) {
+            const container = document.getElementById('tugasTerbaruCards');
+            container.innerHTML = '';
+            
+            const tugasTerbaru = tugas
+                .filter(t => t.status === "Aktif")
+                .slice(0, 3);
+            
+            if (tugasTerbaru.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #777;">Tidak ada tugas terbaru</p>';
+                return;
+            }
+            
+            tugasTerbaru.forEach(tugas => {
+                const pengumpulanTugas = pengumpulan.find(p => p.tugasId === tugas.id);
+                const status = pengumpulanTugas ? 
+                    (pengumpulanTugas.status === "Dinilai" ? "Telah Dinilai" : "Telah Dikumpulkan") : 
+                    "Belum Dikumpulkan";
+                
+                const statusClass = pengumpulanTugas ? 
+                    (pengumpulanTugas.status === "Dinilai" ? "badge-success" : "badge-warning") : 
+                    "badge-danger";
+                
+                const card = createTugasCardMurid(tugas, pengumpulanTugas);
+                container.appendChild(card);
+            });
+        }
+
+        function createTugasCardMurid(tugas, pengumpulan) {
+            const card = document.createElement('div');
+            card.className = `tugas-card ${tugas.tipe === 'kuis' ? 'kuis' : ''}`;
+            
+            const status = pengumpulan ? 
+                (pengumpulan.status === "Dinilai" ? "Telah Dinilai" : "Telah Dikumpulkan") : 
+                "Belum Dikumpulkan";
+            
+            const statusClass = pengumpulan ? 
+                (pengumpulan.status === "Dinilai" ? "selesai" : "aktif") : 
+                "terlambat";
+            
+            const nilai = pengumpulan && pengumpulan.nilai ? pengumpulan.nilai : '-';
+            
+            card.innerHTML = `
+                <div class="tugas-card-header">
+                    <div>
+                        <div class="tugas-card-title">${tugas.judul}</div>
+                        <div class="tugas-card-meta">
+                            <span><i class="fas fa-book"></i> ${tugas.mapel}</span>
+                            <span><i class="fas fa-calendar"></i> ${formatDate(tugas.batasWaktu)}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="tugas-card-badge ${tugas.tipe}">${tugas.tipe === 'kuis' ? 'Kuis' : 'Tugas'}</span>
+                        <span class="tugas-card-badge ${statusClass}">${status}</span>
+                    </div>
+                </div>
+                <div class="tugas-card-description">
+                    ${tugas.deskripsi}
+                </div>
+                <div class="tugas-card-footer">
+                    <div>
+                        <span>Nilai: ${nilai}</span>
+                    </div>
+                    <div class="tugas-card-actions">
+                        <button class="btn btn-primary btn-sm" onclick="lihatDetailTugasMurid(${tugas.id})"><i class="fas fa-eye"></i></button>
+                        ${!pengumpulan ? `
+                            <button class="btn btn-success btn-sm" onclick="kumpulkanTugas(${tugas.id})"><i class="fas fa-upload"></i></button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function loadTugasMuridTable(tugas, pengumpulan) {
+            const containerAktif = document.getElementById('tugasMuridAktifCards');
+            const containerSelesai = document.getElementById('tugasMuridSelesaiCards');
+            const containerSemua = document.getElementById('tugasMuridSemuaCards');
+            
+            containerAktif.innerHTML = '';
+            containerSelesai.innerHTML = '';
+            containerSemua.innerHTML = '';
+            
+            const sekarang = new Date();
+            
+            const tugasAktif = tugas.filter(t => {
+                const batasWaktu = new Date(tugas.batasWaktu);
+                return batasWaktu > sekarang && t.status === "Aktif";
+            });
+            
+            const tugasSelesai = tugas.filter(t => {
+                const batasWaktu = new Date(tugas.batasWaktu);
+                return batasWaktu <= sekarang || t.status === "Selesai";
+            });
+            
+            if (tugasAktif.length === 0) {
+                containerAktif.innerHTML = '<p style="text-align: center; color: #777;">Tidak ada tugas aktif</p>';
+            } else {
+                tugasAktif.forEach(tugas => {
+                    const pengumpulanTugas = pengumpulan.find(p => p.tugasId === tugas.id);
+                    const card = createTugasCardMurid(tugas, pengumpulanTugas);
+                    containerAktif.appendChild(card);
+                });
+            }
+            
+            if (tugasSelesai.length === 0) {
+                containerSelesai.innerHTML = '<p style="text-align: center; color: #777;">Tidak ada tugas selesai</p>';
+            } else {
+                tugasSelesai.forEach(tugas => {
+                    const pengumpulanTugas = pengumpulan.find(p => p.tugasId === tugas.id);
+                    const card = createTugasCardMurid(tugas, pengumpulanTugas);
+                    containerSelesai.appendChild(card);
+                });
+            }
+            
+            if (tugas.length === 0) {
+                containerSemua.innerHTML = '<p style="text-align: center; color: #777;">Tidak ada tugas</p>';
+            } else {
+                tugas.forEach(tugas => {
+                    const pengumpulanTugas = pengumpulan.find(p => p.tugasId === tugas.id);
+                    const card = createTugasCardMurid(tugas, pengumpulanTugas);
+                    containerSemua.appendChild(card);
+                });
+            }
+        }
+
+        function loadNilaiMurid(nilai) {
+            const tbody = document.getElementById('nilaiMuridTable');
+            tbody.innerHTML = '';
+            
+            if (!nilai) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Belum ada nilai</td></tr>';
+                return;
+            }
+            
+            const nilaiItems = [
+                { jenis: 'Tugas 1 - Struktur Atom', nilai: nilai.tugas1, tanggal: '2023-10-22' },
+                { jenis: 'Tugas 2 - Reaksi Redoks', nilai: nilai.tugas2, tanggal: '2023-10-12' },
+                { jenis: 'Kuis 1 - Ikatan Kimia', nilai: nilai.kuis1, tanggal: '2023-10-17' },
+                { jenis: 'UTS', nilai: nilai.uts, tanggal: '2023-10-30' },
+                { jenis: 'UAS', nilai: nilai.uas, tanggal: '2023-11-20' }
+            ];
+            
+            nilaiItems.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.jenis}</td>
+                    <td>${formatDate(item.tanggal)}</td>
+                    <td><span class="badge badge-success">${item.nilai}</span></td>
+                    <td>-</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function loadMateriMurid(materi) {
+            const containerSemua = document.getElementById('materiMuridList');
+            const containerTerbaru = document.getElementById('materiMuridTerbaruList');
+            
+            containerSemua.innerHTML = '';
+            containerTerbaru.innerHTML = '';
+            
+            const materiTerbaru = materi.slice(0, 3);
+            
+            materi.forEach(materi => {
+                let icon = 'fa-file-pdf';
+                if (materi.tipe === 'Video') icon = 'fa-video';
+                if (materi.tipe === 'Presentasi') icon = 'fa-file-powerpoint';
+                
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div>
+                            <h3>${materi.judul}</h3>
+                            <p>${materi.deskripsi}</p>
+                        </div>
+                        <div class="card-icon bg-primary">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-primary btn-sm" onclick="unduhMateri(${materi.id})">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                `;
+                containerSemua.appendChild(card);
+            });
+            
+            materiTerbaru.forEach(materi => {
+                let icon = 'fa-file-pdf';
+                if (materi.tipe === 'Video') icon = 'fa-video';
+                if (materi.tipe === 'Presentasi') icon = 'fa-file-powerpoint';
+                
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div>
+                            <h3>${materi.judul}</h3>
+                            <p>${materi.deskripsi}</p>
+                        </div>
+                        <div class="card-icon bg-primary">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-primary btn-sm" onclick="unduhMateri(${materi.id})">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                `;
+                containerTerbaru.appendChild(card);
+            });
+        }
+
+        function loadPengumumanMurid(pengumuman) {
+            const container = document.getElementById('pengumumanMuridList');
+            container.innerHTML = '';
+            
+            pengumuman.forEach(p => {
+                let prioritasClass = 'badge-primary';
+                if (p.prioritas === 'penting') prioritasClass = 'badge-warning';
+                if (p.prioritas === 'sangat-penting') prioritasClass = 'badge-danger';
+                
+                const item = document.createElement('div');
+                item.className = 'tugas-item';
+                item.innerHTML = `
+                    <div class="tugas-header">
+                        <div class="tugas-title">${p.judul}</div>
+                        <div class="tugas-meta">
+                            <span>${formatDate(p.tanggal)}</span>
+                            <span class="badge ${prioritasClass}">${p.prioritas}</span>
+                        </div>
+                    </div>
+                    <div class="tugas-description">
+                        ${p.isi}
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function lihatDetailTugasMurid(tugasId) {
+            const tugas = dataTugas.find(t => t.id === tugasId);
+            if (!tugas) return;
+            
+            // Isi detail tugas
+            document.getElementById('detailTugasTitle').textContent = `Detail ${tugas.tipe === 'kuis' ? 'Kuis' : 'Tugas'}`;
+            document.getElementById('detailJudul').textContent = tugas.judul;
+            document.getElementById('detailMapel').textContent = tugas.mapel;
+            document.getElementById('detailKelas').textContent = tugas.kelas;
+            document.getElementById('detailDeskripsi').textContent = tugas.deskripsi;
+            document.getElementById('detailBatasWaktu').textContent = formatDateTime(tugas.batasWaktu);
+            document.getElementById('detailStatus').textContent = tugas.status;
+            
+            // Tampilkan modal
+            document.getElementById('detailTugasModal').style.display = 'flex';
+        }
+
+        function kumpulkanTugas(tugasId) {
+            const tugas = dataTugas.find(t => t.id === tugasId);
+            if (!tugas) return;
+            
+            currentTugasId = tugasId;
+            
+            // Isi form kumpulkan tugas
+            document.getElementById('namaTugasKumpul').textContent = tugas.judul;
+            document.getElementById('formKumpulkanTugas').reset();
+            
+            // Tampilkan modal
+            document.getElementById('kumpulkanTugasModal').style.display = 'flex';
+        }
+
+        function simpanKumpulanTugas() {
+            const file = document.getElementById('fileTugas').files[0];
+            const catatan = document.getElementById('catatanTugasMurid').value;
+            
+            if (!file) {
+                showNotification('Harap upload file tugas', 'error');
+                return;
+            }
+            
+            const newId = dataPengumpulan.length > 0 ? Math.max(...dataPengumpulan.map(p => p.id)) + 1 : 1;
+            
+            dataPengumpulan.push({
+                id: newId,
+                tugasId: currentTugasId,
+                siswaId: currentUser.id || 11, // Default untuk demo
+                nama: currentUser.nama,
+                kelas: currentUser.kelas,
+                tanggalKirim: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                file: file.name,
+                nilai: null,
+                catatan: catatan,
+                status: 'Dikumpulkan'
+            });
+            
+            document.getElementById('kumpulkanTugasModal').style.display = 'none';
+            loadMuridData();
+            showNotification('Tugas berhasil dikumpulkan', 'success');
+        }
+
+        function unduhMateri(materiId) {
+            const materi = dataMateri.find(m => m.id === materiId);
+            if (materi) {
+                showNotification(`Mengunduh materi: ${materi.judul}`, 'success');
+                // Di implementasi nyata, ini akan mengunduh file dari server
+            }
+        }
+
+        function initGuruNavigation() {
+            const menuItems = document.querySelectorAll('#guruDashboard .sidebar-menu li');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const sections = document.querySelectorAll('#guruDashboard .content-section');
+                    sections.forEach(section => section.classList.remove('active'));
+                    
+                    const target = this.getAttribute('data-target');
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+        }
+
+        function initMuridNavigation() {
+            const menuItems = document.querySelectorAll('#muridDashboard .sidebar-menu li');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const sections = document.querySelectorAll('#muridDashboard .content-section');
+                    sections.forEach(section => section.classList.remove('active'));
+                    
+                    const target = this.getAttribute('data-target');
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+        }
+
+        function formatDate(dateString) {
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            return new Date(dateString).toLocaleDateString('id-ID', options);
+        }
+
+        function formatDateTime(dateTimeString) {
+            const date = new Date(dateTimeString);
+            const options = { 
+                day: '2-digit', 
+                month: '2-digit', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return date.toLocaleDateString('id-ID', options);
+        }
+
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function checkExistingLogin() {
+            const savedUser = localStorage.getItem('currentUser');
+            const savedRole = localStorage.getItem('currentRole');
+            
+            if (savedUser && savedRole) {
+                currentUser = JSON.parse(savedUser);
+                currentRole = savedRole;
+                showDashboard(currentRole);
+            }
+        }
+    </script>
+</body>
+</html>
